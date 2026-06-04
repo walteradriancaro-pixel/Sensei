@@ -278,9 +278,8 @@ select:focus{border-color:var(--pr)}
     </div>
     <div class="crow2">
       <div class="pnl">
-        <div class="pt">Índice de calidad del catálogo <span class="ps">Puntaje 0-100</span></div>
-        <div style="font-size:11px;color:var(--t2);margin-bottom:10px">Combina: uso activo (30%) + objetos con descripción (30%) + objetos con owner (20%) + no abandonados (20%)</div>
-        <div class="gauge-wrap" id="gauge-wrap"></div>
+        <div class="pt">Temas más frecuentes <span class="ps">Nube de palabras — títulos de dashboards</span></div>
+        <div id="wordcloud" style="height:160px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px;overflow:hidden"></div>
       </div>
       <div class="pnl"><div class="pt">Calidad de metadata</div><div class="hgrid" id="hg"></div></div>
       <div class="pnl"><div class="pt">Sin uso reciente <span class="ps">Top 8</span></div><div id="abd"></div></div>
@@ -381,6 +380,24 @@ function est(d){
 }
 function setProg(p,t){document.getElementById('prog').style.width=p+'%';document.getElementById('ltxt').textContent=t;}
 
+async function downloadOwnerExcel(ownerName, data){
+  if(!window.XLSX){
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload=res;s.onerror=rej;document.head.appendChild(s);
+    });
+  }
+  const rows=[['Nombre','Tipo','Área','Responsable','Login','Sesiones 3m','Sesiones 6m','Sesiones 12m','Usuarios únicos','Score','Estado','Días sin acceso','Modificado','URL']];
+  data.forEach(x=>rows.push([x.nm,x.tp,x.ar,x.ow,x.lg,x.s3,x.s6||0,x.s12||0,x.u3,x.sc,est(x.di).l,x.di,x.md,x.ur]));
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const maxW=rows[0].map((_,i)=>Math.min(40,Math.max(...rows.map(r=>String(r[i]||'').length))));
+  ws['!cols']=maxW.map(w=>({wch:w}));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Objetos');
+  XLSX.writeFile(wb,`Sensei_${ownerName.replace(/[^\w]/g,'_')}.xlsx`);
+}
+
 async function loadAll(){
   try{
     setProg(10,'Cargando resumen...');
@@ -419,7 +436,7 @@ function initResumen(){
   // header KPIs removed — only resumen KPIs
   animCount('sd',m.dash);animCount('si2',m.inf);animCount('sac',m.act);animCount('sab',m.abd);animCount('ssd',m.sdc);animCount('sar',m.areas);
   renderTreemap(SUM.areas);renderTopUsed(SUM.top_used);renderTopRel(SUM.top_rel);
-  renderGauge(m);renderHealth(m);renderAbd(SUM.top_abd);initTopics();
+  renderWordCloud();renderHealth(m);renderAbd(SUM.top_abd);initTopics();
 }
 
 function animCount(id,target){
@@ -447,6 +464,32 @@ function renderTopUsed(a){
 
 function renderTopRel(a){
   document.getElementById('trel').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval ${rc(x.sc)}">${x.sc}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
+}
+
+const WORD_DATA = [{"w": "tablero", "f": 38}, {"w": "parque", "f": 38}, {"w": "dossier", "f": 18}, {"w": "altas", "f": 17}, {"w": "ftth", "f": 16}, {"w": "demanda", "f": 16}, {"w": "prepago", "f": 15}, {"w": "porta", "f": 14}, {"w": "dashboard", "f": 14}, {"w": "movil", "f": 14}, {"w": "abm", "f": 14}, {"w": "funnel", "f": 13}, {"w": "indicadores", "f": 13}, {"w": "calidad", "f": 11}, {"w": "campaña", "f": 11}, {"w": "bot", "f": 10}, {"w": "hogar", "f": 10}, {"w": "kpis", "f": 10}, {"w": "churn", "f": 10}, {"w": "ventas", "f": 10}, {"w": "móvil", "f": 10}, {"w": "alta", "f": 9}, {"w": "oferta", "f": 9}, {"w": "pospago", "f": 9}, {"w": "wapp", "f": 9}, {"w": "recargas", "f": 8}, {"w": "fija", "f": 8}, {"w": "arpu", "f": 8}, {"w": "movistar", "f": 8}, {"w": "prueba", "f": 8}, {"w": "onboarding", "f": 7}, {"w": "cumplidas", "f": 7}, {"w": "mensual", "f": 7}, {"w": "digital", "f": 7}, {"w": "seguimiento", "f": 7}, {"w": "bonos", "f": 7}, {"w": "dosier", "f": 7}, {"w": "bonificaciones", "f": 7}, {"w": "contencion", "f": 7}, {"w": "rssi", "f": 7}, {"w": "campañas", "f": 6}, {"w": "catálogo", "f": 6}, {"w": "pagos", "f": 6}, {"w": "nps", "f": 6}, {"w": "diario", "f": 6}, {"w": "reporte", "f": 6}, {"w": "delta", "f": 6}, {"w": "despliegue", "f": 6}, {"w": "portas", "f": 6}, {"w": "migras", "f": 6}, {"w": "red", "f": 6}, {"w": "clientes", "f": 5}, {"w": "metadatos", "f": 5}, {"w": "mtv", "f": 5}, {"w": "packs", "f": 5}, {"w": "equipos", "f": 5}, {"w": "valor", "f": 5}, {"w": "cosecha", "f": 5}, {"w": "venta", "f": 5}, {"w": "bajas", "f": 5}];
+
+function renderWordCloud(){
+  const c=document.getElementById('wordcloud');
+  if(!c)return;
+  const maxF=Math.max(...WORD_DATA.map(w=>w.f));
+  const minF=Math.min(...WORD_DATA.map(w=>w.f));
+  const colors=['#1A56C4','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1'];
+  const capitalize=s=>s.charAt(0).toUpperCase()+s.slice(1);
+  WORD_DATA.forEach((wd,i)=>{
+    const pct=(wd.f-minF)/(maxF-minF||1);
+    const size=Math.round(10+pct*22);
+    const opacity=0.5+pct*0.5;
+    const color=colors[i%colors.length];
+    const span=document.createElement('span');
+    span.textContent=capitalize(wd.w);
+    span.style.cssText=`font-size:${size}px;color:${color};opacity:${opacity};font-weight:${pct>0.6?700:500};cursor:default;transition:opacity .15s;`;
+    span.title=`"${wd.w}" aparece en ${wd.f} títulos de dashboards`;
+    span.onmouseenter=()=>span.style.opacity='1';
+    span.onmouseleave=()=>span.style.opacity=opacity;
+    span.onclick=()=>{swt('b');setTimeout(()=>{document.getElementById('sinp').value=wd.w;fc();},100);};
+    span.style.cursor='pointer';
+    c.appendChild(span);
+  });
 }
 
 function renderGauge(m){
@@ -667,10 +710,39 @@ function searchOwner(owOverride){
   if(!results.length){document.getElementById('owner-results').innerHTML='<div class="exp-empty">No se encontró ningún responsable</div>';return;}
   const owner=results[0];
   const totalSes=results.reduce((s,r)=>s+r.s3,0);
-  let h=`<div class="exp-owner-badge"><div><div class="exp-owner-name">${owner.ow}</div><div class="exp-owner-stats">${owner.lg} · ${results.length} objetos (${dash.length} dashboards + ${inf.length} reportes) · ${totalSes.toLocaleString()} sesiones 3m</div></div></div>`;
-  const renderList=(items,icon,color)=>items.slice(0,8).map(x=>`<div class="exp-item"><span class="exp-item-name" title="${x.nm}">${x.nm}</span><span class="exp-item-val">${x.s3} ses</span><span class="exp-item-val ${rc(x.sc)}">${x.sc}</span><span class="est ${est(x.di).c}" style="flex-shrink:0;font-size:10px;padding:2px 6px;border-radius:10px;">${est(x.di).l}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="exp-item-link">↗</a>`:''}</div>`).join('');
-  if(dash.length)h+=`<div style="font-size:10px;font-weight:700;color:var(--pr);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">📊 Dashboards (${dash.length})</div>${renderList(dash)}${dash.length>8?`<div style="font-size:10px;color:var(--t3);padding:4px 0">... y ${dash.length-8} más</div>`:''}`;
-  if(inf.length)h+=`<div style="font-size:10px;font-weight:700;color:#0369A1;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.4px">📋 Reportes (${inf.length})</div>${renderList(inf)}${inf.length>8?`<div style="font-size:10px;color:var(--t3);padding:4px 0">... y ${inf.length-8} más</div>`:''}`;
+  
+  const renderListTable=(items)=>{
+    if(!items.length)return'';
+    const rows=items.map(x=>`<tr>
+      <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${x.nm}">${x.nm}</td>
+      <td style="text-align:right;font-weight:600">${x.s3}</td>
+      <td style="text-align:right">${x.u3}</td>
+      <td style="text-align:right" class="${rc(x.sc)}">${x.sc}</td>
+      <td style="text-align:center"><span class="est ${est(x.di).c}" style="font-size:10px;padding:2px 5px;border-radius:8px">${est(x.di).l}</span></td>
+      <td>${x.ur?`<a href="${x.ur}" target="_blank" class="exp-item-link">↗</a>`:''}</td>
+    </tr>`).join('');
+    return`<table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead><tr style="background:var(--s2)">
+        <th style="padding:5px 8px;text-align:left;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Nombre</th>
+        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Ses 3m</th>
+        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Usuarios</th>
+        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Score</th>
+        <th style="padding:5px 8px;text-align:center;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Estado</th>
+        <th style="padding:5px 8px;border-bottom:1px solid var(--bd)"></th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  };
+
+  let h=`<div class="exp-owner-badge" style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div class="exp-owner-name">${owner.ow}</div>
+      <div class="exp-owner-stats">${owner.lg} · ${results.length} objetos (${dash.length} dashboards + ${inf.length} reportes) · ${totalSes.toLocaleString()} sesiones 3m</div>
+    </div>
+    <button onclick="downloadOwnerExcel('${owner.ow.replace(/'/g,"\'")}',${JSON.stringify(results).replace(/\\/g,'\\\\').replace(/'/g,"\'")})" class="exp-btn" style="padding:6px 12px;font-size:11px">⬇ Excel</button>
+  </div>`;
+  if(dash.length)h+=`<div style="font-size:10px;font-weight:700;color:var(--pr);margin:8px 0 6px;text-transform:uppercase;letter-spacing:.4px">📊 Dashboards (${dash.length})</div>${renderListTable(dash)}${dash.length>20?`<div style="font-size:10px;color:var(--t3);padding:4px 0">Mostrando 20 de ${dash.length}</div>`:''}`;
+  if(inf.length)h+=`<div style="font-size:10px;font-weight:700;color:#0369A1;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.4px">📋 Reportes (${inf.length})</div>${renderListTable(inf)}${inf.length>20?`<div style="font-size:10px;color:var(--t3);padding:4px 0">Mostrando 20 de ${inf.length}</div>`:''}`;
   document.getElementById('owner-results').innerHTML=h;
 }
 
