@@ -372,7 +372,8 @@ async function loadDetail(){
     const [r1,r2]=await Promise.all([fetch(D1_URL),fetch(D2_URL)]);
     if(!r1.ok||!r2.ok)throw new Error('Error cargando detalle');
     const [d1,d2]=await Promise.all([r1.json(),r2.json()]);
-    DET=[...d1,...d2];
+    // Filtrar solo objetos con al menos 1 sesion en los ultimos 6 meses
+    DET=[...d1,...d2].filter(r=>r.s6>0);
     detReady=true;
     document.getElementById('detbadge').style.display='none';
     initAreas(DET);
