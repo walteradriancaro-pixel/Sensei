@@ -506,7 +506,7 @@ async function send(){
   inp.value='';btn.disabled=true;
   addMsg('u',msg);hist.push({role:'user',content:msg});addTyping();
   const sys=`Sos Sensei, asistente de metadata de MicroStrategy. Respondé siempre en español.\nCatálogo:\n${buildCtx()}\nSINONIMOS: mora=morosidad/deuda/incobrabilidad, portabilidad=porta/MNP, altas=activaciones/ventas, bajas=churn, NPS=satisfaccion/experiencia, equipos=terminales/financiado, FTTH=fibra/hogar, campana=RTDM/marketing.\nFORMATO: Antes de listar: "Encontré N objetos sobre [tema]:" Para cada uno: **N. Nombre** [📊/📋] estado. Descripción. Owner/fecha/ses/score. URL si existe. Máx 5. Al final preguntar si quieren más info.`;
-  const PROXY='https://script.google.com/macros/s/AKfycbw2o4zMjwZOE2WjWeNU_J4Hz9IzW4JvXvmj0dup9f001DYJvCTePaovLt1R5bKhzUZM_w/exec';
+  const PROXY='/.netlify/functions/proxy';
   try{
     const r=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:hist})});
     const data=await r.json();
