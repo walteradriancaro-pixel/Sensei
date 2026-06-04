@@ -279,7 +279,7 @@ select:focus{border-color:var(--pr)}
     <div class="crow2">
       <div class="pnl">
         <div class="pt">Temas más frecuentes <span class="ps">Nube de palabras — títulos de dashboards</span></div>
-        <div id="wordcloud" style="height:160px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px;overflow:hidden"></div>
+        <div id="wordcloud" style="height:200px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:10px;overflow:hidden"></div>
       </div>
       <div class="pnl"><div class="pt">Calidad de metadata</div><div class="hgrid" id="hg"></div></div>
       <div class="pnl"><div class="pt">Sin uso reciente <span class="ps">Top 8</span></div><div id="abd"></div></div>
@@ -327,6 +327,7 @@ select:focus{border-color:var(--pr)}
       <div class="exp-card">
         <div class="exp-title">👤 Buscar por responsable</div>
         <div class="exp-sub">Encontrá todos los dashboards y reportes de un analista</div>
+        <div id="exp-status" style="display:none;font-size:10px;padding:4px 10px;border-radius:20px;margin-bottom:8px;display:inline-flex;align-items:center;gap:5px"></div>
         <div class="exp-input-wrap">
           <input type="text" class="exp-input" id="owner-input" placeholder="Nombre o login del responsable..." oninput="searchOwnerSuggest()">
           <button class="exp-btn" onclick="searchOwner()">Buscar</button>
@@ -350,8 +351,7 @@ select:focus{border-color:var(--pr)}
 
 <script>
 const SUM_URL='sensei_summary.json';
-const D1_URL='sensei_detail_1.json';
-const D2_URL='sensei_detail_2.json';
+const DET_URLS=['sensei_detail_1.json','sensei_detail_2.json','sensei_detail_3.json','sensei_detail_4.json','sensei_detail_5.json'];
 const COLORS=['#1A56C4','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1','#84CC16','#0EA5E9','#A855F7','#22C55E','#E11D48'];
 const TOPICS=[
   {key:'mora',label:'Mora',icon:'💳',kw:['mora','deuda','incobrabilidad','anticuacion','castigo','cobranza','recupero']},
@@ -418,13 +418,16 @@ async function loadAll(){
 async function loadDetail(){
   document.getElementById('detbadge').style.display='flex';
   try{
-    const [r1,r2]=await Promise.all([fetch(D1_URL),fetch(D2_URL)]);
-    if(!r1.ok||!r2.ok)throw new Error('Error cargando detalle');
-    const [d1,d2]=await Promise.all([r1.json(),r2.json()]);
-    DET=[...d1,...d2].filter(r=>r.s6>0);
+    const responses=await Promise.all(DET_URLS.map(u=>fetch(u)));
+    if(responses.some(r=>!r.ok))throw new Error('Error cargando detalle');
+    const parts=await Promise.all(responses.map(r=>r.json()));
+    DET=parts.flat().filter(r=>r.s6>0);
     detReady=true;
     document.getElementById('detbadge').style.display='none';
     initAreas(DET);
+    // Update explorar status
+    const expSt=document.getElementById('exp-status');
+    if(expSt){expSt.style.cssText='font-size:10px;padding:4px 10px;border-radius:20px;margin-bottom:8px;display:inline-flex;align-items:center;gap:5px;background:var(--okp);color:var(--ok)';expSt.innerHTML='✓ Catálogo completo cargado — '+DET.length.toLocaleString()+' objetos disponibles';}
     if(document.getElementById('bv').classList.contains('active')){filt=[...DET];showSearchReady();}
   }catch(e){
     document.getElementById('detbadge').innerHTML=`<span style="color:var(--er)">⚠ ${e.message}</span>`;
