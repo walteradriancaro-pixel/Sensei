@@ -1,1 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensei — Catálogo de Metadata</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0F4FB;--w:#fff;--s2:#F7F9FD;--bd:#DDE5F0;
+  --pr:#1B5FBA;--pl:#2E7DD1;--pp:#EBF2FF;--pd:#0F3D7A;
+  --ac:#0EA5E9;--ap:#E0F4FE;
+  --ok:#059669;--okp:#ECFDF5;--wn:#D97706;--wnp:#FFFBEB;--er:#DC2626;--erp:#FEF2F2;
+  --tx:#0F172A;--t2:#475569;--t3:#94A3B8;
+  --sh:0 1px 3px rgba(15,23,42,.08);--shm:0 4px 12px rgba(27,95,186,.12);
+  --r:10px;--rl:14px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:14px}
+/* HEADER */
+.hdr{background:var(--w);border-bottom:1px solid var(--bd);box-shadow:var(--sh);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px}
+.lm{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--pr),var(--ac));display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:14px;color:#fff;box-shadow:0 2px 8px rgba(27,95,186,.3)}
+.ln{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16px;color:var(--pd)}
+.lt{font-size:10px;color:var(--t3);margin-top:-1px}
+.hks{display:flex;gap:1.5rem}
+.hk{text-align:center}
+.hkv{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:var(--pr)}
+.hkl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
+.tabs{display:flex;background:var(--bg);border-radius:8px;padding:3px;gap:2px}
+.tab{padding:5px 14px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--t2);transition:all .15s}
+.tab.active{background:var(--w);color:var(--pr);box-shadow:var(--sh);font-weight:600}
+/* MAIN */
+.main{max-width:1440px;margin:0 auto;padding:1.5rem 2rem}
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:16px}
+.sp{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--pr);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:13px;color:var(--t3)}
+/* PROGRESS BAR */
+.progbar{width:240px;height:4px;background:var(--bd);border-radius:2px;overflow:hidden;margin-top:4px}
+.progfill{height:100%;background:var(--pr);border-radius:2px;transition:width .3s ease}
+/* ERROR */
+.ebox{max-width:480px;margin:4rem auto;background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);padding:2rem;text-align:center}
+.ebox h3{color:var(--er);margin-bottom:8px}
+.ebox p{font-size:13px;color:var(--t2);line-height:1.6}
+/* DETAIL LOADING BADGE */
+.det-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--t3);padding:4px 10px;background:var(--s2);border:1px solid var(--bd);border-radius:20px;margin-bottom:1rem}
+.det-badge .sp2{width:10px;height:10px;border:2px solid var(--bd);border-top-color:var(--pr);border-radius:50%;animation:spin .8s linear infinite}
+/* RESUMEN */
+#rv{display:none}#rv.active{display:block}
+.sgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:1.5rem}
+.sk{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--r);padding:14px 12px;text-align:center}
+.skv{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:22px;color:var(--pr);line-height:1}
+.skv.ok{color:var(--ok)}.skv.wn{color:var(--wn)}.skv.er{color:var(--er)}
+.skl{font-size:11px;color:var(--t3);margin-top:4px;font-weight:500}
+.sks{font-size:10px;color:var(--t3);margin-top:2px}
+.crow{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.crow2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.pnl{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);padding:1.1rem}
+.pt{font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:13px;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.ps{font-size:11px;color:var(--t3);font-weight:400}
+.arow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.an{font-size:11px;color:var(--t2);width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.abw{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.ab2{height:100%;border-radius:3px;background:var(--pr)}
+.ac2{font-size:10px;color:var(--t3);width:32px;text-align:right;flex-shrink:0}
+.tr{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)}
+.tr:last-child{border-bottom:none}
+.tnum{font-size:11px;color:var(--t3);width:16px;flex-shrink:0;font-weight:600}
+.tname{flex:1;font-size:12px;color:var(--tx);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tbg{font-size:10px;padding:1px 6px;border-radius:10px;flex-shrink:0}
+.tbd{background:var(--pp);color:var(--pr)}.tbi{background:var(--ap);color:#0369A1}
+.tval{font-size:11px;color:var(--t3);width:36px;text-align:right;flex-shrink:0}
+.tlnk{font-size:11px;color:var(--pr);text-decoration:none;flex-shrink:0;margin-left:4px;font-weight:500}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hi{background:var(--s2);border-radius:8px;padding:10px;border:1px solid var(--bd)}
+.hit{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.hil{font-size:11px;color:var(--t2);font-weight:500}
+.hiv{font-size:16px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif}
+.hib{height:4px;background:var(--bd);border-radius:2px;overflow:hidden}
+.hibf{height:100%;border-radius:2px}
+/* BUSCAR */
+#bv{display:none}#bv.active{display:block}
+.tlbl{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.tps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem}
+.tp{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--t2);transition:all .15s;user-select:none}
+.tp:hover{border-color:var(--pl);color:var(--pr);background:var(--pp)}
+.tp.active{border-color:var(--pr);background:var(--pr);color:#fff}
+.ctrls{display:flex;gap:8px;margin-bottom:1rem;align-items:center}
+.swp{flex:1;position:relative}
+.swp input{width:100%;padding:9px 14px 9px 36px;background:var(--w);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.swp input:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(27,95,186,.1)}
+.swp input::placeholder{color:var(--t3)}
+.sic{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:14px;pointer-events:none}
+select{padding:9px 10px;background:var(--w);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:12px;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
+select:focus{border-color:var(--pr)}
+.clb{padding:9px 12px;background:var(--w);border:1.5px solid var(--bd);border-radius:var(--r);font-size:12px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.clb:hover{border-color:var(--er);color:var(--er);background:var(--erp)}
+.ri{font-size:12px;color:var(--t3);white-space:nowrap;padding:0 4px}
+.rtbl{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.rth{display:grid;grid-template-columns:2fr 80px 150px 60px 60px 60px 80px 90px;background:var(--s2);border-bottom:1.5px solid var(--bd)}
+.rth span{padding:8px 10px;font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px}
+.rr{display:grid;grid-template-columns:2fr 80px 150px 60px 60px 60px 80px 90px;border-bottom:1px solid var(--bd);transition:background .12s;align-items:center}
+.rr:last-child{border-bottom:none}
+.rr:hover{background:var(--pp)}
+.rr>div,.rr>a{padding:7px 10px;font-size:12px}
+.rcn{color:var(--tx);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.rcn .rcd{font-size:11px;color:var(--t3);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.rbg{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500}
+.rba{font-size:11px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rbn{font-size:12px;color:var(--tx);text-align:right}
+.rbs{font-size:12px;font-weight:600;text-align:right}
+.sa{color:var(--ok)}.sm{color:var(--wn)}.sb{color:var(--er)}
+.rbst{text-align:center}
+.est{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:500;white-space:nowrap}
+.ea{background:var(--okp);color:var(--ok)}.ep{background:var(--wnp);color:var(--wn)}.ei{background:var(--erp);color:var(--er)}
+.ract{display:flex;gap:4px;align-items:center;padding:6px 10px}
+.abt{padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:background .15s;text-decoration:none;display:inline-block}
+.abtp{background:var(--pr);color:#fff}.abtp:hover{background:var(--pl)}
+.abts{background:var(--s2);color:var(--t2);border:1px solid var(--bd)}.abts:hover{border-color:var(--pr);color:var(--pr)}
+.pag{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:1rem;padding-bottom:.5rem}
+.pb{padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;background:var(--w);border:1.5px solid var(--bd);color:var(--t2);transition:all .15s;font-family:'Inter',sans-serif}
+.pb:hover,.pb.active{background:var(--pr);color:#fff;border-color:var(--pr)}
+.pi{font-size:11px;color:var(--t3);padding:0 6px}
+/* CHAT */
+#cv{display:none}#cv.active{display:block}
+.cw{display:grid;grid-template-columns:240px 1fr;gap:14px;height:calc(100vh - 120px)}
+.csb{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);padding:.9rem;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.cst{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sgb{width:100%;text-align:left;padding:7px 9px;background:var(--s2);border:1.5px solid var(--bd);border-radius:7px;color:var(--t2);font-size:11px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;line-height:1.4}
+.sgb:hover{border-color:var(--pr);color:var(--pr);background:var(--pp)}
+.sbi{margin-top:auto;padding:9px;background:var(--pp);border-radius:7px;border:1px solid rgba(27,95,186,.2);font-size:11px;color:var(--t2);line-height:1.5}
+.sbi strong{color:var(--pr)}
+.cm{display:flex;flex-direction:column;min-height:0}
+.msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:1.1rem;background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl) var(--rl) 0 0;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.msg{display:flex;gap:8px;align-items:flex-start;animation:su .25s ease}
+.msg.u{flex-direction:row-reverse}
+@keyframes su{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.mav{width:27px;height:27px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.msg.b .mav{background:linear-gradient(135deg,var(--pr),var(--ac));color:#fff}
+.msg.u .mav{background:var(--s2);border:1.5px solid var(--bd);color:var(--t2)}
+.mb{max-width:78%;padding:9px 13px;border-radius:11px;font-size:13px;line-height:1.65}
+.msg.b .mb{background:var(--s2);border:1.5px solid var(--bd);border-top-left-radius:3px}
+.msg.u .mb{background:var(--pr);color:#fff;border-top-right-radius:3px}
+.mb a{color:var(--pr);font-weight:500}
+.msg.u .mb a{color:rgba(255,255,255,.85)}
+.dots{display:flex;gap:3px;align-items:center;padding:2px 0}
+.dots span{width:5px;height:5px;border-radius:50%;background:var(--t3);animation:bc 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes bc{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.cin{display:flex;gap:8px;padding:9px;background:var(--w);border:1.5px solid var(--bd);border-top:none;border-radius:0 0 var(--rl) var(--rl)}
+.cin input{flex:1;padding:9px 13px;background:var(--bg);border:1.5px solid var(--bd);border-radius:7px;color:var(--tx);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.cin input:focus{border-color:var(--pr);background:var(--w)}
+.cin input::placeholder{color:var(--t3)}
+.sndb{padding:9px 16px;background:var(--pr);border:none;border-radius:7px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s}
+.sndb:hover{background:var(--pl)}.sndb:disabled{opacity:.5;cursor:not-allowed}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="logo">
+    <div class="lm">S</div>
+    <div><div class="ln">Sensei</div><div class="lt">Catálogo de Metadata · Big Data</div></div>
+  </div>
+  <div class="hks">
+    <div class="hk"><div class="hkv" id="kd">—</div><div class="hkl">Dashboards</div></div>
+    <div class="hk"><div class="hkv" id="ki">—</div><div class="hkl">Informes</div></div>
+    <div class="hk"><div class="hkv" id="ka">—</div><div class="hkl">Activos</div></div>
+    <div class="hk"><div class="hkv" id="kab">—</div><div class="hkl">Abandonados</div></div>
+    <div class="hk"><div class="hkv" id="kar">—</div><div class="hkl">Áreas</div></div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="swt('r')">📊 Resumen</button>
+    <button class="tab" onclick="swt('b')">🔍 Buscar</button>
+    <button class="tab" onclick="swt('c')">💬 Asistente</button>
+  </div>
+</header>
+<div class="main">
+  <div id="load" class="loading">
+    <div class="sp"></div>
+    <p id="loadtxt">Cargando resumen...</p>
+    <div class="progbar"><div class="progfill" id="prog" style="width:0%"></div></div>
+  </div>
+  <div id="eb" style="display:none" class="ebox">
+    <h3>⚠ No se pudo cargar el catálogo</h3>
+    <p>Verificá que los archivos estén en SharePoint con permisos correctos.<br>Error: <span id="em"></span></p>
+  </div>
+  <!-- RESUMEN -->
+  <div id="rv">
+    <div id="detbadge" style="display:none" class="det-badge"><div class="sp2"></div><span>Cargando catálogo completo en segundo plano...</span></div>
+    <div class="sgrid">
+      <div class="sk"><div class="skv" id="sd">—</div><div class="skl">Dashboards</div><div class="sks">publicados</div></div>
+      <div class="sk"><div class="skv" id="si2">—</div><div class="skl">Informes</div><div class="sks">standalone</div></div>
+      <div class="sk"><div class="skv ok" id="sac">—</div><div class="skl">Activos</div><div class="sks">accedidos hoy</div></div>
+      <div class="sk"><div class="skv wn" id="sab">—</div><div class="skl">Abandonados</div><div class="sks">+90 días sin uso</div></div>
+      <div class="sk"><div class="skv er" id="ssd">—</div><div class="skl">Sin descripción</div><div class="sks">metadata incompleta</div></div>
+      <div class="sk"><div class="skv" id="sar">—</div><div class="skl">Áreas</div><div class="sks">de negocio</div></div>
+    </div>
+    <div class="crow">
+      <div class="pnl"><div class="pt">Distribución por área <span class="ps">Top 12 por volumen</span></div><div id="achrt"></div></div>
+      <div class="pnl"><div class="pt">Más usados <span class="ps">Sesiones 3 meses</span></div><div id="tused"></div></div>
+      <div class="pnl"><div class="pt">Más relevantes <span class="ps">Por score</span></div><div id="trel"></div></div>
+    </div>
+    <div class="crow2">
+      <div class="pnl"><div class="pt">Calidad de metadata</div><div class="hgrid" id="hg"></div></div>
+      <div class="pnl"><div class="pt">Objetos sin uso reciente <span class="ps">Top 8 por días inactivos</span></div><div id="abd"></div></div>
+    </div>
+  </div>
+  <!-- BUSCAR -->
+  <div id="bv">
+    <div class="tlbl">Filtrar por tema</div>
+    <div class="tps" id="tps"></div>
+    <div class="ctrls">
+      <div class="swp"><span class="sic">🔍</span><input type="text" id="sinp" placeholder="Buscar por nombre, descripción, responsable, área..." oninput="fc()"></div>
+      <select id="ftp" onchange="fc()"><option value="">Todos los tipos</option><option value="Dashboard">📊 Dashboard</option><option value="Informe">📋 Informe</option></select>
+      <select id="far" onchange="fc()"><option value="">Todas las áreas</option></select>
+      <select id="frl" onchange="fc()"><option value="">Toda relevancia</option><option value="Alta">⭐ Alta</option><option value="Media">☆ Media</option><option value="Baja">○ Baja</option></select>
+      <button class="clb" onclick="clr()">✕ Limpiar</button>
+      <span class="ri" id="ri"></span>
+    </div>
+    <div id="detloading" style="display:none;padding:3rem;text-align:center">
+      <div class="sp" style="margin:0 auto 12px"></div>
+      <p style="font-size:13px;color:var(--t3)">Cargando catálogo completo...</p>
+      <div class="progbar" style="margin:12px auto 0"><div class="progfill" id="prog2" style="width:0%"></div></div>
+    </div>
+    <div class="rtbl" id="rtbl" style="display:none">
+      <div class="rth">
+        <span>Objeto</span><span>Tipo</span><span>Área</span>
+        <span style="text-align:right">Ses 3m</span><span style="text-align:right">Usuarios</span>
+        <span style="text-align:right">Score</span><span style="text-align:center">Estado</span><span>Acciones</span>
+      </div>
+      <div id="res"></div>
+    </div>
+    <div class="pag" id="pag"></div>
+  </div>
+  <!-- CHAT -->
+  <div id="cv">
+    <div class="cw">
+      <div class="csb">
+        <div><div class="cst">💡 Sugerencias</div><div id="sgs"></div></div>
+        <div class="sbi">🤖 Acceso a <strong id="nobj">—</strong> objetos indexados.</div>
+      </div>
+      <div class="cm">
+        <div class="msgs" id="msgs"></div>
+        <div class="cin">
+          <input type="text" id="ci" placeholder="Preguntá sobre dashboards, informes, métricas o responsables..." onkeydown="if(event.key==='Enter')send()">
+          <button class="sndb" id="sbtn" onclick="send()">Enviar →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const SUM_URL='sensei_summary.json';
+const DET_URL='sensei_detail.json';
+const TOPICS=[
+  {key:'mora',label:'Mora / Deuda',icon:'💳',kw:['mora','deuda','incobrabilidad','anticuacion','castigo','cobranza','recupero','cartera']},
+  {key:'ventas',label:'Ventas / Altas',icon:'📈',kw:['alta','venta','captacion','activacion','suscripcion','funnel','porta','portabilidad']},
+  {key:'bajas',label:'Bajas / Churn',icon:'📉',kw:['baja','churn','cancelacion','desactivacion','fuga']},
+  {key:'red',label:'Red / Calidad',icon:'📡',kw:['red','calidad','disponibilidad','cobertura','performance','celda']},
+  {key:'nps',label:'NPS / Experiencia',icon:'⭐',kw:['nps','satisfaccion','experiencia','encuesta','promoter']},
+  {key:'equipos',label:'Equipos',icon:'📱',kw:['equipo','terminal','financiado','cuota','dispositivo','hardware']},
+  {key:'campanas',label:'Campañas',icon:'📣',kw:['campana','rtdm','ci360','marketing','promocion','oferta']},
+  {key:'ftth',label:'FTTH / Fija',icon:'🏠',kw:['ftth','fibra','hogar','fija','banda ancha']},
+  {key:'b2b',label:'B2B / Empresas',icon:'🏢',kw:['b2b','empresa','pyme','corporativo','negocio']},
+  {key:'parque',label:'Parque / Base',icon:'👥',kw:['parque','base','suscriptor','planta','stock']},
+];
+const SGS=['¿Existe algún dashboard sobre mora o deuda?','¿Qué informes hay sobre portabilidad?','¿Cuál es el dashboard más usado?','¿Hay análisis de churn o bajas?','¿Quién es el responsable de Disponibilidad?','¿Qué dashboards tienen información de NPS?','¿Hay algo sobre campañas?','¿Qué objetos llevan más de 90 días sin acceso?'];
 
+let SUM=null,DET=null,filt=[],cp=1,atp=null,hist=[],detReady=false;
+const PS=50;
+
+function rel(s){return s>=80?'Alta':s>=50?'Media':'Baja'}
+function rc(s){return s>=80?'sa':s>=50?'sm':'sb'}
+function est(d){if(d===0)return{l:'● Activo',c:'ea'};if(d<=90)return{l:'⚠ '+d+'d',c:'ep'};return{l:'✕ '+d+'d',c:'ei'};}
+
+// LOAD STRATEGY: summary first, then detail in background
+async function loadAll(){
+  try{
+    // Step 1: load summary (fast ~200KB)
+    setProg(10,'Cargando resumen...');
+    const r1=await fetch(SUM_URL);
+    if(!r1.ok)throw new Error('HTTP '+r1.status+' al cargar resumen');
+    setProg(60,'Procesando datos...');
+    SUM=await r1.json();
+    setProg(100,'Listo');
+    document.getElementById('load').style.display='none';
+    initResumen();
+    document.getElementById('rv').classList.add('active');
+    // Step 2: load detail in background
+    loadDetail();
+  }catch(e){
+    document.getElementById('load').style.display='none';
+    document.getElementById('em').textContent=e.message;
+    document.getElementById('eb').style.display='block';
+  }
+}
+
+async function loadDetail(){
+  document.getElementById('detbadge').style.display='flex';
+  try{
+    const r=await fetch(DET_URL);
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    DET=await r.json();
+    detReady=true;
+    document.getElementById('detbadge').style.display='none';
+    initAreas(DET);
+    // If user is already on search tab, render
+    if(document.getElementById('bv').classList.contains('active')){
+      filt=[...DET];
+      showSearchReady();
+    }
+  }catch(e){
+    document.getElementById('detbadge').innerHTML='<span style="color:var(--er)">⚠ No se pudo cargar el catálogo completo</span>';
+  }
+}
+
+function setProg(pct,txt){
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('loadtxt').textContent=txt;
+}
+
+function initResumen(){
+  const m=SUM.meta;
+  document.getElementById('kd').textContent=m.dash.toLocaleString();
+  document.getElementById('ki').textContent=m.inf.toLocaleString();
+  document.getElementById('ka').textContent=m.act.toLocaleString();
+  document.getElementById('kab').textContent=m.abd.toLocaleString();
+  document.getElementById('kar').textContent=m.areas;
+  document.getElementById('sd').textContent=m.dash.toLocaleString();
+  document.getElementById('si2').textContent=m.inf.toLocaleString();
+  document.getElementById('sac').textContent=m.act.toLocaleString();
+  document.getElementById('sab').textContent=m.abd.toLocaleString();
+  document.getElementById('ssd').textContent=m.sdc.toLocaleString();
+  document.getElementById('sar').textContent=m.areas;
+  document.getElementById('nobj').textContent=m.total.toLocaleString();
+  rAreas(SUM.areas);
+  rUsed(SUM.top_used);
+  rRel(SUM.top_rel);
+  rHealth(m);
+  rAbd(SUM.top_abd);
+  initTopics();
+  initSgs();
+  setTimeout(()=>addMsg('b','<strong>¡Hola! Soy Sensei 👋</strong><br><br>Tengo acceso a <strong>'+m.total.toLocaleString()+'</strong> objetos de Big Data. Podés explorar el resumen, buscar en el catálogo completo o preguntarme sobre cualquier tema. ¿En qué te ayudo?'),300);
+}
+
+function rAreas(a){
+  const mx=(a[0]?.d||0)+(a[0]?.i||0)||1;
+  document.getElementById('achrt').innerHTML=a.slice(0,12).map(x=>{
+    const t=x.d+x.i,p=Math.round(t/mx*100);
+    return `<div class="arow"><div class="an" title="${x.ar}">${x.ar}</div><div class="abw"><div class="ab2" style="width:${p}%"></div></div><div class="ac2">${t}</div></div>`;
+  }).join('');
+}
+
+function rUsed(a){
+  document.getElementById('tused').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval">${x.s3}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
+}
+
+function rRel(a){
+  document.getElementById('trel').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval ${rc(x.sc)}">${x.sc}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
+}
+
+function rHealth(m){
+  const t=m.total,cd=t-m.sdc,co=t-m.sow;
+  const items=[
+    {l:'Con descripción',v:cd.toLocaleString(),p:Math.round(cd/t*100),c:'#1B5FBA'},
+    {l:'Con owner',v:co.toLocaleString(),p:Math.round(co/t*100),c:'#0EA5E9'},
+    {l:'Activos hoy',v:m.act.toLocaleString(),p:Math.round(m.act/t*100),c:'#059669'},
+    {l:'Abandonados',v:m.abd.toLocaleString(),p:Math.round(m.abd/t*100),c:'#DC2626'},
+  ];
+  document.getElementById('hg').innerHTML=items.map(x=>`<div class="hi"><div class="hit"><span class="hil">${x.l}</span><span class="hiv" style="color:${x.c}">${x.v}</span></div><div class="hib"><div class="hibf" style="width:${x.p}%;background:${x.c}"></div></div><div style="font-size:10px;color:var(--t3);margin-top:3px">${x.p}% del total</div></div>`).join('');
+}
+
+function rAbd(a){
+  document.getElementById('abd').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval" style="color:var(--er)">${x.di}d</span><span style="font-size:10px;color:var(--t3);flex-shrink:0">${(x.ow||'').split(',')[0]}</span></div>`).join('');
+}
+
+// SEARCH
+function initTopics(){
+  const c=document.getElementById('tps');
+  TOPICS.forEach(t=>{
+    const b=document.createElement('button');b.className='tp';b.dataset.key=t.key;
+    b.innerHTML=`<span>${t.icon}</span>${t.label}`;
+    b.onclick=()=>{const ia=b.classList.contains('active');document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));atp=ia?null:t.key;if(!ia)b.classList.add('active');fc();};
+    c.appendChild(b);
+  });
+}
+
+function initAreas(r){
+  const a=[...new Set(r.map(x=>x.ar))].sort();
+  const s=document.getElementById('far');
+  s.innerHTML='<option value="">Todas las áreas</option>';
+  a.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;s.appendChild(o);});
+}
+
+function showSearchReady(){
+  document.getElementById('detloading').style.display='none';
+  document.getElementById('rtbl').style.display='block';
+  renderRes();
+}
+
+function fc(){
+  if(!detReady){
+    // search in summary chat data as fallback
+    return;
+  }
+  const q=document.getElementById('sinp').value.toLowerCase();
+  const tp=document.getElementById('ftp').value,ar=document.getElementById('far').value,rl=document.getElementById('frl').value;
+  filt=DET.filter(x=>{
+    let mt=true;
+    if(atp){const t=TOPICS.find(x=>x.key===atp);if(t)mt=t.kw.some(k=>(x.nm||'').toLowerCase().includes(k)||(x.dc||'').toLowerCase().includes(k)||(x.ar||'').toLowerCase().includes(k));}
+    return mt&&(!q||[x.nm,x.dc,x.ow,x.ar,x.lg].some(f=>(f||'').toLowerCase().includes(q)))&&(!tp||x.tp===tp)&&(!ar||x.ar===ar)&&(!rl||rel(x.sc)===rl);
+  });
+  cp=1;renderRes();
+}
+
+function clr(){
+  document.getElementById('sinp').value='';
+  ['ftp','far','frl'].forEach(id=>document.getElementById(id).value='');
+  atp=null;document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  if(detReady){filt=[...DET];renderRes();}
+}
+
+function renderRes(){
+  const s=(cp-1)*PS,pg=filt.slice(s,s+PS);
+  document.getElementById('ri').textContent=filt.length.toLocaleString()+' resultado'+(filt.length!==1?'s':'');
+  let h='';
+  pg.forEach(x=>{
+    const e=est(x.di),tc=x.tp==='Dashboard'?'tbd':'tbi',nm=(x.nm||'').replace(/'/g,"\\'");
+    h+=`<div class="rr">
+      <div class="rcn"><div>${x.nm||''}</div><div class="rcd">${x.dc||'Sin descripción'}</div></div>
+      <div><span class="rbg ${tc}">${x.tp==='Dashboard'?'📊':'📋'} ${x.tp}</span></div>
+      <div class="rba">${x.ar||''}</div>
+      <div class="rbn" style="text-align:right">${x.s3}</div>
+      <div class="rbn" style="text-align:right">${x.u3}</div>
+      <div class="rbs ${rc(x.sc)}">${x.sc}</div>
+      <div class="rbst"><span class="est ${e.c}">${e.l}</span></div>
+      <div class="ract">${x.ur?`<a href="${x.ur}" target="_blank" class="abt abtp">Abrir</a>`:''}<button class="abt abts" onclick="ask('${nm}')">💬</button></div>
+    </div>`;
+  });
+  document.getElementById('res').innerHTML=h||'<div style="padding:2rem;text-align:center;color:var(--t3);font-size:13px">Sin resultados</div>';
+  rpag();
+}
+
+function rpag(){
+  const t=Math.ceil(filt.length/PS);
+  if(t<=1){document.getElementById('pag').innerHTML='';return;}
+  let h='';
+  if(cp>1)h+=`<button class="pb" onclick="gp(${cp-1})">←</button>`;
+  const s=Math.max(1,cp-2),e=Math.min(t,cp+2);
+  for(let i=s;i<=e;i++)h+=`<button class="pb ${i===cp?'active':''}" onclick="gp(${i})">${i}</button>`;
+  if(cp<t)h+=`<button class="pb" onclick="gp(${cp+1})">→</button>`;
+  h+=`<span class="pi">Pág. ${cp}/${t} · ${filt.length.toLocaleString()} objetos</span>`;
+  document.getElementById('pag').innerHTML=h;
+}
+
+function gp(n){cp=n;renderRes();document.getElementById('bv').scrollIntoView();}
+
+// TABS
+function swt(t){
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',(['r','b','c'][i])===t));
+  ['rv','bv','cv'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',(['r','b','c'][i])===t));
+  if(t==='b'){
+    if(detReady){
+      if(filt.length===0)filt=[...DET];
+      showSearchReady();
+    }else{
+      document.getElementById('detloading').style.display='block';
+      document.getElementById('rtbl').style.display='none';
+    }
+  }
+}
+
+// CHAT
+function initSgs(){
+  const c=document.getElementById('sgs');
+  SGS.forEach(s=>{const b=document.createElement('button');b.className='sgb';b.textContent=s;b.onclick=()=>{document.getElementById('ci').value=s;send();};c.appendChild(b);});
+}
+
+function addMsg(role,html){
+  const c=document.getElementById('msgs'),d=document.createElement('div');
+  d.className='msg '+role;
+  d.innerHTML=`<div class="mav">${role==='b'?'S':'U'}</div><div class="mb">${html}</div>`;
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+function addTyping(){
+  const c=document.getElementById('msgs'),d=document.createElement('div');
+  d.className='msg b';d.id='ty';
+  d.innerHTML='<div class="mav">S</div><div class="mb"><div class="dots"><span></span><span></span><span></span></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+function buildCtx(){
+  const src=SUM?.chat||[];
+  return src.slice(0,300).map(r=>{
+    const d=r.di===0?'ACTIVO':r.di<=90?'POCO USO('+r.di+'d)':'INACTIVO('+r.di+'d)';
+    return `[${r.tp}] ${r.nm} | ${(r.dc||'').slice(0,70)} | Area:${r.ar} | Owner:${r.ow}(${r.lg}) | Ses3m:${r.s3} Usr:${r.u3} Score:${r.sc} | ${d} | Mod:${r.md} | URL:${r.ur}`;
+  }).join('\n');
+}
+
+async function send(){
+  const inp=document.getElementById('ci'),btn=document.getElementById('sbtn');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';btn.disabled=true;
+  addMsg('u',msg);hist.push({role:'user',content:msg});addTyping();
+  const sys=`Sos Sensei, asistente de metadata de MicroStrategy. Respondé siempre en español.\nCatálogo:\n${buildCtx()}\nSINONIMOS: mora=morosidad/deuda/incobrabilidad, portabilidad=porta/MNP, altas=activaciones/ventas, bajas=churn, NPS=satisfaccion/experiencia, equipos=terminales/financiado, FTTH=fibra/hogar, campana=RTDM/marketing.\nFORMATO: Antes de listar: "Encontré N objetos sobre [tema]:" Para cada uno: **N. Nombre** [📊/📋] estado. Descripción. Owner/fecha/ses/score. URL si existe. Máx 5. Al final preguntar si quieren más info.`;
+  const PROXY='https://script.google.com/macros/s/AKfycbw2o4zMjwZOE2WjWeNU_J4Hz9IzW4JvXvmj0dup9f001DYJvCTePaovLt1R5bKhzUZM_w/exec';
+  try{
+    const r=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:hist})});
+    const data=await r.json();
+    document.getElementById('ty')?.remove();
+    const reply=data.content?.[0]?.text||'No pude procesar la respuesta.';
+    hist.push({role:'assistant',content:reply});
+    addMsg('b',reply.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>').replace(/(https?:\/\/[^\s<"]+)/g,'<a href="$1" target="_blank">🔗 Abrir</a>'));
+  }catch(e){document.getElementById('ty')?.remove();addMsg('b','❌ Error al conectar con el asistente.');}
+  btn.disabled=false;inp.focus();
+}
+
+function ask(n){swt('c');document.getElementById('ci').value=`Contame más sobre "${n}"`;setTimeout(send,150);}
+
+loadAll();
+</script>
+</body>
+</html>
