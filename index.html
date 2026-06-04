@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sensei — Catálogo de Metadata</title>
+<title>Sensei</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -172,15 +172,7 @@ select:focus{border-color:var(--pr)}
 <header class="hdr">
   <div class="logo">
     <div class="lm">S</div>
-    <div><div class="ln">Sensei</div><div class="lt">Catálogo de Metadata · Big Data</div></div>
-  </div>
-  <div class="hks">
-    <div class="hk" onclick="openKpi('dash')"><div class="hkv" id="kd">—</div><div class="hkl">Dashboards</div></div>
-    <div class="hk" onclick="openKpi('inf')"><div class="hkv" id="ki">—</div><div class="hkl">Reportes</div></div>
-    <div class="hk" onclick="openKpi('act')"><div class="hkv ok" id="ka">—</div><div class="hkl">Activos</div></div>
-    <div class="hk" onclick="openKpi('abd')"><div class="hkv wn" id="kab">—</div><div class="hkl">Abandonados</div></div>
-    <div class="hk" onclick="openKpi('sdc')"><div class="hkv er" id="kar2">—</div><div class="hkl">Sin descripción</div></div>
-    <div class="hk" onclick="openKpi('areas')"><div class="hkv" id="kar">—</div><div class="hkl">Áreas</div></div>
+    <div><div class="ln">Sensei</div></div>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="swt('r')">📊 Resumen</button>
@@ -213,13 +205,71 @@ select:focus{border-color:var(--pr)}
   <!-- RESUMEN -->
   <div id="rv">
     <div id="detbadge" style="display:none" class="det-badge"><div class="sp2"></div><span>Cargando catálogo completo...</span></div>
-    <div class="sgrid">
-      <div class="sk"><div class="skv" id="sd">—</div><div class="skl">📊 Dashboards</div><div class="sks">clic para ver detalle</div></div>
-      <div class="sk"><div class="skv" id="si2" style="color:var(--ac)">—</div><div class="skl">📋 Reportes</div><div class="sks">clic para ver detalle</div></div>
-      <div class="sk"><div class="skv ok" id="sac">—</div><div class="skl">✓ Activos hoy</div><div class="sks">clic para ver detalle</div></div>
-      <div class="sk"><div class="skv wn" id="sab">—</div><div class="skl">⚠ Abandonados</div><div class="sks">clic para ver detalle</div></div>
-      <div class="sk"><div class="skv er" id="ssd">—</div><div class="skl">✗ Sin descripción</div><div class="sks">clic para ver detalle</div></div>
-      <div class="sk"><div class="skv" id="sar">—</div><div class="skl">◎ Áreas</div><div class="sks">clic para ver detalle</div></div>
+    <!-- FILA 1: Volumen -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
+      <div class="sk" onclick="openKpi('dash')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📊</div>
+          <div style="text-align:left">
+            <div class="skv" id="sd">—</div>
+            <div class="skl">Dashboards</div>
+            <div class="sks">Objetos visuales interactivos · clic para ver listado</div>
+          </div>
+        </div>
+      </div>
+      <div class="sk" onclick="openKpi('inf')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--ap);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div>
+          <div style="text-align:left">
+            <div class="skv" id="si2" style="color:var(--ac)">—</div>
+            <div class="skl">Reportes</div>
+            <div class="sks">Consultas analíticas standalone · clic para ver listado</div>
+          </div>
+        </div>
+      </div>
+      <div class="sk" onclick="openKpi('areas')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🏢</div>
+          <div style="text-align:left">
+            <div class="skv" id="sar">—</div>
+            <div class="skl">Áreas de negocio</div>
+            <div class="sks">Unidades organizacionales con objetos · clic para ver</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FILA 2: Calidad -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem">
+      <div class="sk" onclick="openKpi('act')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--okp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🟢</div>
+          <div style="text-align:left">
+            <div class="skv ok" id="sac">—</div>
+            <div class="skl">Activos hoy</div>
+            <div class="sks">Objetos accedidos en las últimas 24 horas · clic para ver</div>
+          </div>
+        </div>
+      </div>
+      <div class="sk" onclick="openKpi('abd')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--wnp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚠️</div>
+          <div style="text-align:left">
+            <div class="skv wn" id="sab">—</div>
+            <div class="skl">Abandonados</div>
+            <div class="sks">Sin acceso hace más de 90 días · clic para ver listado</div>
+          </div>
+        </div>
+      </div>
+      <div class="sk" onclick="openKpi('sdc')">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:10px;background:var(--erp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📝</div>
+          <div style="text-align:left">
+            <div class="skv er" id="ssd">—</div>
+            <div class="skl">Sin descripción</div>
+            <div class="sks">Objetos con metadata incompleta · clic para ver listado</div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="crow">
       <div class="pnl"><div class="pt">Distribución por área <span class="ps">Treemap — top 15</span></div><div class="treemap" id="treemap"></div></div>
@@ -227,7 +277,11 @@ select:focus{border-color:var(--pr)}
       <div class="pnl"><div class="pt">Más relevantes <span class="ps">Por score</span></div><div id="trel"></div></div>
     </div>
     <div class="crow2">
-      <div class="pnl"><div class="pt">Salud del catálogo</div><div class="gauge-wrap" id="gauge-wrap"></div></div>
+      <div class="pnl">
+        <div class="pt">Índice de calidad del catálogo <span class="ps">Puntaje 0-100</span></div>
+        <div style="font-size:11px;color:var(--t2);margin-bottom:10px">Combina: uso activo (30%) + objetos con descripción (30%) + objetos con owner (20%) + no abandonados (20%)</div>
+        <div class="gauge-wrap" id="gauge-wrap"></div>
+      </div>
       <div class="pnl"><div class="pt">Calidad de metadata</div><div class="hgrid" id="hg"></div></div>
       <div class="pnl"><div class="pt">Sin uso reciente <span class="ps">Top 8</span></div><div id="abd"></div></div>
     </div>
@@ -362,7 +416,7 @@ async function loadDetail(){
 
 function initResumen(){
   const m=SUM.meta;
-  animCount('kd',m.dash);animCount('ki',m.inf);animCount('ka',m.act);animCount('kab',m.abd);animCount('kar2',m.sdc);animCount('kar',m.areas);
+  // header KPIs removed — only resumen KPIs
   animCount('sd',m.dash);animCount('si2',m.inf);animCount('sac',m.act);animCount('sab',m.abd);animCount('ssd',m.sdc);animCount('sar',m.areas);
   renderTreemap(SUM.areas);renderTopUsed(SUM.top_used);renderTopRel(SUM.top_rel);
   renderGauge(m);renderHealth(m);renderAbd(SUM.top_abd);initTopics();
@@ -454,19 +508,31 @@ function openKpi(type){
 
 function closeKpi(){document.getElementById('kpi-modal').classList.remove('active');}
 
-function downloadKpiExcel(){
+async function downloadKpiExcel(){
   if(!kpiData.length)return;
-  let csv='';
-  if(kpiData[0].ar&&!kpiData[0].nm){
-    csv='Área,Dashboards,Reportes,Total,Sesiones 3m\n';
-    csv+=kpiData.map(a=>`"${a.ar}",${a.d},${a.i},${a.d+a.i},${a.s3}`).join('\n');
-  }else{
-    csv='Nombre,Tipo,Área,Responsable,Login,Sesiones 3m,Sesiones 6m,Sesiones 12m,Usuarios 3m,Score,Estado,Días sin acceso,Modificado,URL\n';
-    csv+=kpiData.map(x=>`"${x.nm}","${x.tp}","${x.ar}","${x.ow}","${x.lg}",${x.s3},${x.s6||0},${x.s12||0},${x.u3},${x.sc},"${est(x.di).l}",${x.di},"${x.md}","${x.ur}"`).join('\n');
+  // Load SheetJS dynamically
+  if(!window.XLSX){
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload=res;s.onerror=rej;document.head.appendChild(s);
+    });
   }
-  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`Sensei_${kpiTitle.replace(/[^\w]/g,'_')}.csv`;a.click();
+  let rows=[];
+  if(kpiData[0].ar&&!kpiData[0].nm){
+    rows=[['Área','Dashboards','Reportes','Total','Sesiones 3m']];
+    kpiData.forEach(a=>rows.push([a.ar,a.d,a.i,a.d+a.i,a.s3]));
+  }else{
+    rows=[['Nombre','Tipo','Área','Responsable','Login','Sesiones 3m','Sesiones 6m','Sesiones 12m','Usuarios únicos 3m','Score','Estado','Días sin acceso','Modificado','URL']];
+    kpiData.forEach(x=>rows.push([x.nm,x.tp,x.ar,x.ow,x.lg,x.s3,x.s6||0,x.s12||0,x.u3,x.sc,est(x.di).l,x.di,x.md,x.ur]));
+  }
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  // Auto column width
+  const maxW=rows[0].map((_,i)=>Math.min(40,Math.max(...rows.map(r=>String(r[i]||'').length))));
+  ws['!cols']=maxW.map(w=>({wch:w}));
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Sensei');
+  XLSX.writeFile(wb,`Sensei_${kpiTitle.replace(/[^\w]/g,'_')}.xlsx`);
 }
 
 // BUSCAR
@@ -542,6 +608,7 @@ function renderRes(){
       <div class="rcn"><div>${x.nm||''}</div><div class="rcd">${x.dc||'Sin descripción'}</div></div>
       <div><span style="font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600" class="${tc}">${x.tp==='Dashboard'?'📊':'📋'} ${x.tp}</span></div>
       <div class="rba">${x.ar||''}</div>
+      <div class="rba" style="font-size:10px" title="${x.ow||''}">${(x.ow||'Sin owner').substring(0,18)}</div>
       <div class="rbn" style="text-align:right">${x.s3}</div>
       <div class="rbn" style="text-align:right">${x.u3}</div>
       <div class="rbs ${rc(x.sc)}">${x.sc}</div>
