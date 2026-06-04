@@ -13,8 +13,11 @@ exports.handler = async function(event, context) {
 
   try {
     const body = JSON.parse(event.body);
-    console.log('Request size:', JSON.stringify(body).length, 'chars');
     
+    // Force haiku for speed — avoids Netlify 10s timeout
+    body.model = 'claude-haiku-4-5-20251001';
+    body.max_tokens = body.max_tokens || 1000;
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -26,11 +29,9 @@ exports.handler = async function(event, context) {
     });
 
     const text = await response.text();
-    console.log('Response status:', response.status);
-    console.log('Response preview:', text.slice(0, 200));
 
     return {
-      statusCode: 200,
+      statusCode: response.status,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
@@ -38,7 +39,6 @@ exports.handler = async function(event, context) {
       body: text
     };
   } catch(err) {
-    console.log('Error:', err.message);
     return {
       statusCode: 500,
       headers: {'Access-Control-Allow-Origin': '*'},
