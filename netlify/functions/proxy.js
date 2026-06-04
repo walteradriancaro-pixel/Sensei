@@ -14,8 +14,6 @@ exports.handler = async function(event, context) {
   try {
     const body = JSON.parse(event.body);
     
-    const { default: fetch } = await import('node-fetch');
-    
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -40,7 +38,7 @@ exports.handler = async function(event, context) {
     return {
       statusCode: 500,
       headers: {'Access-Control-Allow-Origin': '*'},
-      body: JSON.stringify({error: err.toString()})
+      body: JSON.stringify({error: err.message, stack: err.stack})
     };
   }
 };
