@@ -100,12 +100,12 @@ select:focus{border-color:var(--pr)}
 .type-tab.active.inf{border-color:var(--ac);background:var(--ap);color:#0369A1}
 .type-tab.active.all{border-color:var(--tx);background:var(--tx);color:#fff}
 .rtbl{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);overflow:hidden}
-.rth{display:grid;grid-template-columns:2.2fr 80px 140px 70px 70px 70px 80px 90px;background:var(--s2);border-bottom:1.5px solid var(--bd)}
+.rth{display:grid;grid-template-columns:1.8fr 75px 130px 130px 65px 65px 65px 80px 80px 90px;background:var(--s2);border-bottom:1.5px solid var(--bd)}
 .rth span{padding:8px 10px;font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.4px;cursor:pointer;user-select:none;display:flex;align-items:center;gap:3px}
 .rth span:hover{color:var(--pr)}
 .rth span.sort-asc::after{content:'↑';color:var(--pr)}
 .rth span.sort-desc::after{content:'↓';color:var(--pr)}
-.rr{display:grid;grid-template-columns:2.2fr 80px 140px 70px 70px 70px 80px 90px;border-bottom:1px solid var(--bd);transition:background .12s;align-items:center}
+.rr{display:grid;grid-template-columns:1.8fr 75px 130px 130px 65px 65px 65px 80px 80px 90px;border-bottom:1px solid var(--bd);transition:background .12s;align-items:center}
 .rr:last-child{border-bottom:none}
 .rr:hover{background:var(--pp)}
 .rr>div,.rr>a{padding:7px 10px;font-size:11px}
@@ -252,13 +252,15 @@ select:focus{border-color:var(--pr)}
     <div id="detloading" style="display:none;padding:3rem;text-align:center"><div class="sp" style="margin:0 auto 12px"></div><p style="font-size:12px;color:var(--t3)">Cargando catálogo...</p></div>
     <div class="rtbl" id="rtbl" style="display:none">
       <div class="rth">
-        <span onclick="sortBy('nm')">Objeto</span>
-        <span onclick="sortBy('tp')">Tipo</span>
-        <span onclick="sortBy('ar')">Área</span>
-        <span onclick="sortBy('s3')" style="justify-content:flex-end">Ses 3m</span>
-        <span onclick="sortBy('u3')" style="justify-content:flex-end">Usuarios</span>
-        <span onclick="sortBy('sc')" style="justify-content:flex-end">Score</span>
-        <span onclick="sortBy('di')" style="justify-content:center">Estado</span>
+        <span onclick="sortBy('nm')" data-tip="Nombre del objeto y su descripción">Objeto</span>
+        <span onclick="sortBy('tp')" data-tip="Tipo de objeto: Dashboard (visual interactivo) o Reporte (consulta analítica standalone)">Tipo</span>
+        <span onclick="sortBy('ar')" data-tip="Área de negocio a la que pertenece el objeto">Área</span>
+        <span onclick="sortBy('ow')" data-tip="Responsable del objeto — persona que lo creó o mantiene">Owner</span>
+        <span onclick="sortBy('s3')" style="justify-content:flex-end" data-tip="Cantidad de sesiones en los últimos 3 meses (total de aperturas)">Ses 3m</span>
+        <span onclick="sortBy('u3')" style="justify-content:flex-end" data-tip="Cantidad de usuarios únicos que accedieron en los últimos 3 meses">Usuarios únicos</span>
+        <span onclick="sortBy('sc')" style="justify-content:flex-end" data-tip="Score de relevancia 0-100: combina uso (40%), vigencia (30%), frescura (15%) y calidad de metadata (15%)">Score</span>
+        <span onclick="sortBy('md')" style="justify-content:center" data-tip="Fecha en que fue modificado por última vez">Fecha mod.</span>
+        <span onclick="sortBy('di')" style="justify-content:center" data-tip="Estado de uso: Activo (accedido hoy), Reciente (1-90 días sin acceso), Inactivo (más de 90 días)">Estado</span>
         <span>Acciones</span>
       </div>
       <div id="res"></div>
@@ -490,7 +492,7 @@ function setType(type,btn){
 function sortBy(col){
   if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}
   document.querySelectorAll('.rth span').forEach(s=>s.classList.remove('sort-asc','sort-desc'));
-  const cols=['nm','tp','ar','s3','u3','sc','di',''];
+  const cols=['nm','tp','ar','ow','s3','u3','sc','md','di',''];
   const idx=cols.indexOf(col);
   if(idx>=0){const headers=document.querySelectorAll('.rth span');if(headers[idx])headers[idx].classList.add(sortDir===1?'sort-asc':'sort-desc');}
   filt.sort((a,b)=>{
