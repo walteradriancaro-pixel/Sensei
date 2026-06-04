@@ -483,7 +483,7 @@ async function send(){
   addMsg('u',msg);hist.push({role:'user',content:msg});addTyping();
   const sys=`Sos Sensei, asistente de metadata de MicroStrategy. Respondé siempre en español.\nCatálogo:\n${buildCtx()}\nSINONIMOS: mora=morosidad/deuda/incobrabilidad, portabilidad=porta/MNP, altas=activaciones/ventas, bajas=churn, NPS=satisfaccion/experiencia, equipos=terminales/financiado, FTTH=fibra/hogar, campana=RTDM/marketing.\nFORMATO: Antes de listar: "Encontré N objetos sobre [tema]:" Para cada uno: **N. Nombre** [📊/📋] estado. Descripción. Owner/fecha/ses/score. URL si existe. Máx 5. Al final preguntar si quieren más info.`;
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:hist})});
+    const r=await fetch('https://tangerine-lamington-412a90.netlify.app/.netlify/functions/proxy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:hist})});
     const data=await r.json();
     document.getElementById('ty')?.remove();
     const reply=data.content?.[0]?.text||'No pude procesar la respuesta.';
