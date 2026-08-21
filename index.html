@@ -397,6 +397,21 @@ function initResumen(){
   renderTreemap(SUM.treemap);
   renderHealth(k);
   renderWordCloud();
+  if(SUM.top_used)renderTopUsed(SUM.top_used);
+  if(SUM.top_rel)renderTopRel(SUM.top_rel);
+  if(SUM.top_abd)renderAbd(SUM.top_abd);
+}
+
+function renderTopUsed(a){
+  document.getElementById('tused').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval">${x.s3}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
+}
+
+function renderTopRel(a){
+  document.getElementById('trel').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval ${rc(x.sc)}">${x.sc}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
+}
+
+function renderAbd(a){
+  document.getElementById('abd').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval" style="color:var(--er)">${x.di}d</span><span style="font-size:10px;color:var(--t3);flex-shrink:0">${(x.ow||'').split(',')[0]}</span></div>`).join('');
 }
 
 function animCount(id,target){
