@@ -313,8 +313,8 @@ select:focus{border-color:var(--pr)}
 </div>
 
 <script>
-const SUM_URL='https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_summary.json';
-const DET_URLS=['https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_detail_1.json','https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_detail_2.json'];
+const SUM_URL='sensei_summary.json';
+const DET_URLS=['sensei_detail_1.json','sensei_detail_2.json'];
 const COLORS=['#1A56C4','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1','#84CC16','#0EA5E9','#A855F7','#22C55E','#E11D48'];
 const TOPICS=[
   {key:'mora',label:'Mora',icon:'💳',kw:['mora','deuda','incobrabilidad','anticuacion','castigo','cobranza','recupero']},
@@ -357,7 +357,7 @@ async function downloadOwnerExcel(ownerName,data){
 async function loadAll(){
   try{
     setProg(10,'Cargando resumen...');
-    const r=await fetch(SUM_URL,{credentials:'include'});
+    const r=await fetch(SUM_URL);
     if(!r.ok)throw new Error('HTTP '+r.status+' — puede que necesites estar logueado en SharePoint');
     setProg(60,'Procesando...');
     SUM=await r.json();
@@ -367,14 +367,14 @@ async function loadAll(){
     document.getElementById('rv').classList.add('active');
     loadDetail();
   }catch(e){
-    document.getElementById('load').innerHTML=`<div style="text-align:center;color:var(--er);padding:2rem"><p style="font-size:14px;font-weight:700">Error al cargar los datos</p><p style="font-size:12px;color:var(--t2);margin-top:8px">${e.message}</p><p style="font-size:11px;color:var(--t3);margin-top:8px">Asegurate de estar logueado en Microsoft 365</p></div>`;
+    document.getElementById('load').innerHTML=`<div style="text-align:center;color:var(--er);padding:2rem"><p style="font-size:14px;font-weight:700">Error al cargar los datos</p><p style="font-size:12px;color:var(--t2);margin-top:8px">${e.message}</p></div>`;
   }
 }
 
 async function loadDetail(){
   document.getElementById('detbadge').style.display='flex';
   try{
-    const responses=await Promise.all(DET_URLS.map(u=>fetch(u,{credentials:'include'})));
+    const responses=await Promise.all(DET_URLS.map(u=>fetch(u)));
     if(responses.some(r=>!r.ok))throw new Error('Error cargando detalle');
     const parts=await Promise.all(responses.map(r=>r.json()));
     DET=parts.flat().filter(r=>r['Usabilidad 6m']>0||r.s6>0);
