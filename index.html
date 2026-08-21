@@ -74,10 +74,8 @@ body{font-family:Verdana,Geneva,sans-serif;background:var(--bg);color:var(--tx);
 .hiv{font-size:16px;font-weight:700}
 .hib{height:5px;background:var(--bd);border-radius:3px;overflow:hidden}
 .hibf{height:100%;border-radius:3px;transition:width .8s ease}
-/* SEMAFORO */
 .est{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:700;white-space:nowrap}
 .ea{background:var(--okp);color:var(--ok)}.ep{background:var(--wnp);color:var(--wn)}.ei{background:var(--erp);color:var(--er)}
-/* SEARCH */
 .tlbl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .tps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem}
 .tp{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--t2);transition:all .15s;user-select:none;font-family:Verdana,sans-serif}
@@ -124,7 +122,6 @@ select:focus{border-color:var(--pr)}
 .pb{padding:5px 11px;border-radius:7px;font-size:11px;cursor:pointer;background:var(--w);border:1.5px solid var(--bd);color:var(--t2);transition:all .15s;font-family:Verdana,sans-serif}
 .pb:hover,.pb.active{background:var(--pr);color:#fff;border-color:var(--pr)}
 .pi{font-size:10px;color:var(--t3);padding:0 6px}
-/* EXPLORAR */
 .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem}
 .exp-card{background:var(--w);border:1.5px solid var(--bd);border-radius:var(--rl);padding:1.25rem}
 .exp-title{font-weight:700;font-size:13px;color:var(--tx);margin-bottom:4px}
@@ -148,7 +145,6 @@ select:focus{border-color:var(--pr)}
 .exp-usage-box{background:var(--s2);border-radius:8px;padding:8px;text-align:center;border:1px solid var(--bd)}
 .exp-usage-val{font-weight:700;font-size:16px;color:var(--tx)}
 .exp-usage-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
-/* MODAL KPI */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:200;align-items:center;justify-content:center}
 .modal-overlay.active{display:flex}
 .modal{background:var(--w);border-radius:var(--rl);width:90%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(15,23,42,.2)}
@@ -181,7 +177,6 @@ select:focus{border-color:var(--pr)}
   </div>
 </header>
 
-<!-- MODAL KPI -->
 <div class="modal-overlay" id="kpi-modal" onclick="if(event.target===this)closeKpi()">
   <div class="modal">
     <div class="modal-hdr">
@@ -202,72 +197,45 @@ select:focus{border-color:var(--pr)}
     <div class="progbar"><div class="progfill" id="prog" style="width:0%"></div></div>
   </div>
 
-  <!-- RESUMEN -->
   <div id="rv">
     <div id="detbadge" style="display:none" class="det-badge"><div class="sp2"></div><span>Cargando catálogo completo...</span></div>
-    <!-- FILA 1: Volumen -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px">
       <div class="sk" onclick="openKpi('dash')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📊</div>
-          <div style="text-align:left">
-            <div class="skv" id="sd">—</div>
-            <div class="skl">Dashboards</div>
-            <div class="sks">Objetos visuales interactivos · clic para ver listado</div>
-          </div>
+          <div style="text-align:left"><div class="skv" id="sd">—</div><div class="skl">Dashboards</div><div class="sks">Objetos visuales interactivos · clic para ver listado</div></div>
         </div>
       </div>
       <div class="sk" onclick="openKpi('inf')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--ap);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div>
-          <div style="text-align:left">
-            <div class="skv" id="si2" style="color:var(--ac)">—</div>
-            <div class="skl">Reportes</div>
-            <div class="sks">Consultas analíticas standalone · clic para ver listado</div>
-          </div>
+          <div style="text-align:left"><div class="skv" id="si2" style="color:var(--ac)">—</div><div class="skl">Reportes</div><div class="sks">Consultas analíticas standalone · clic para ver listado</div></div>
         </div>
       </div>
       <div class="sk" onclick="openKpi('areas')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🏢</div>
-          <div style="text-align:left">
-            <div class="skv" id="sar">—</div>
-            <div class="skl">Áreas de negocio</div>
-            <div class="sks">Unidades organizacionales con objetos · clic para ver</div>
-          </div>
+          <div style="text-align:left"><div class="skv" id="sar">—</div><div class="skl">Áreas de negocio</div><div class="sks">Unidades organizacionales con objetos · clic para ver</div></div>
         </div>
       </div>
     </div>
-    <!-- FILA 2: Calidad -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem">
       <div class="sk" onclick="openKpi('act')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--okp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🟢</div>
-          <div style="text-align:left">
-            <div class="skv ok" id="sac">—</div>
-            <div class="skl">Activos hoy</div>
-            <div class="sks">Objetos accedidos en las últimas 24 horas · clic para ver</div>
-          </div>
+          <div style="text-align:left"><div class="skv ok" id="sac">—</div><div class="skl">Activos hoy</div><div class="sks">Objetos accedidos en las últimas 24 horas · clic para ver</div></div>
         </div>
       </div>
       <div class="sk" onclick="openKpi('abd')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--wnp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">⚠️</div>
-          <div style="text-align:left">
-            <div class="skv wn" id="sab">—</div>
-            <div class="skl">Abandonados</div>
-            <div class="sks">Sin acceso hace más de 90 días · clic para ver listado</div>
-          </div>
+          <div style="text-align:left"><div class="skv wn" id="sab">—</div><div class="skl">Abandonados</div><div class="sks">Sin acceso hace más de 90 días · clic para ver listado</div></div>
         </div>
       </div>
       <div class="sk" onclick="openKpi('sdc')">
         <div style="display:flex;align-items:center;gap:12px">
           <div style="width:44px;height:44px;border-radius:10px;background:var(--erp);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📝</div>
-          <div style="text-align:left">
-            <div class="skv er" id="ssd">—</div>
-            <div class="skl">Sin descripción</div>
-            <div class="sks">Objetos con metadata incompleta · clic para ver listado</div>
-          </div>
+          <div style="text-align:left"><div class="skv er" id="ssd">—</div><div class="skl">Sin descripción</div><div class="sks">Objetos con metadata incompleta · clic para ver listado</div></div>
         </div>
       </div>
     </div>
@@ -277,16 +245,12 @@ select:focus{border-color:var(--pr)}
       <div class="pnl"><div class="pt">Más relevantes <span class="ps">Por score</span></div><div id="trel"></div></div>
     </div>
     <div class="crow2">
-      <div class="pnl">
-        <div class="pt">Temas más frecuentes <span class="ps">Nube de palabras — títulos de dashboards</span></div>
-        <div id="wordcloud" style="height:200px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:10px;overflow:hidden"></div>
-      </div>
+      <div class="pnl"><div class="pt">Temas más frecuentes <span class="ps">Nube de palabras — títulos de dashboards</span></div><div id="wordcloud" style="height:200px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:10px;overflow:hidden"></div></div>
       <div class="pnl"><div class="pt">Calidad de metadata</div><div class="hgrid" id="hg"></div></div>
       <div class="pnl"><div class="pt">Sin uso reciente <span class="ps">Top 8</span></div><div id="abd"></div></div>
     </div>
   </div>
 
-  <!-- BUSCAR -->
   <div id="bv">
     <div class="type-tabs">
       <button class="type-tab active all" onclick="setType('all',this)">Todos</button>
@@ -305,15 +269,15 @@ select:focus{border-color:var(--pr)}
     <div id="detloading" style="display:none;padding:3rem;text-align:center"><div class="sp" style="margin:0 auto 12px"></div><p style="font-size:12px;color:var(--t3)">Cargando catálogo...</p></div>
     <div class="rtbl" id="rtbl" style="display:none">
       <div class="rth">
-        <span onclick="sortBy('nm')" data-tip="Nombre del objeto y su descripción">Objeto</span>
-        <span onclick="sortBy('tp')" data-tip="Tipo de objeto: Dashboard (visual interactivo) o Reporte (consulta analítica standalone)">Tipo</span>
-        <span onclick="sortBy('ar')" data-tip="Área de negocio a la que pertenece el objeto">Área</span>
-        <span onclick="sortBy('ow')" data-tip="Responsable del objeto — persona que lo creó o mantiene">Owner</span>
-        <span onclick="sortBy('s3')" style="justify-content:flex-end" data-tip="Cantidad de sesiones en los últimos 3 meses (total de aperturas)">Ses 3m</span>
-        <span onclick="sortBy('u3')" style="justify-content:flex-end" data-tip="Cantidad de usuarios únicos que accedieron en los últimos 3 meses">Usuarios únicos</span>
-        <span onclick="sortBy('sc')" style="justify-content:flex-end" data-tip="Score de relevancia 0-100: combina uso (40%), vigencia (30%), frescura (15%) y calidad de metadata (15%)">Score</span>
-        <span onclick="sortBy('md')" style="justify-content:center" data-tip="Fecha en que fue modificado por última vez">Fecha mod.</span>
-        <span onclick="sortBy('di')" style="justify-content:center" data-tip="Estado de uso: Activo (accedido hoy), Reciente (1-90 días sin acceso), Inactivo (más de 90 días)">Estado</span>
+        <span onclick="sortBy('nm')">Objeto</span>
+        <span onclick="sortBy('tp')">Tipo</span>
+        <span onclick="sortBy('ar')">Área</span>
+        <span onclick="sortBy('ow')">Owner</span>
+        <span onclick="sortBy('s3')" style="justify-content:flex-end">Ses 3m</span>
+        <span onclick="sortBy('u3')" style="justify-content:flex-end">Usuarios únicos</span>
+        <span onclick="sortBy('sc')" style="justify-content:flex-end">Score</span>
+        <span onclick="sortBy('md')" style="justify-content:center">Fecha mod.</span>
+        <span onclick="sortBy('di')" style="justify-content:center">Estado</span>
         <span>Acciones</span>
       </div>
       <div id="res"></div>
@@ -321,7 +285,6 @@ select:focus{border-color:var(--pr)}
     <div class="pag" id="pag"></div>
   </div>
 
-  <!-- EXPLORAR -->
   <div id="ev">
     <div class="exp-grid">
       <div class="exp-card">
@@ -350,8 +313,8 @@ select:focus{border-color:var(--pr)}
 </div>
 
 <script>
-const SUM_URL='sensei_summary.json';
-const DET_URLS=['sensei_detail_1.json','sensei_detail_2.json','sensei_detail_3.json','sensei_detail_4.json','sensei_detail_5.json'];
+const SUM_URL='https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_summary.json';
+const DET_URLS=['https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_detail_1.json','https://tmovilesar.sharepoint.com/sites/prueba_w/Documentos%20compartidos/sensei_detail_2.json'];
 const COLORS=['#1A56C4','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1','#84CC16','#0EA5E9','#A855F7','#22C55E','#E11D48'];
 const TOPICS=[
   {key:'mora',label:'Mora',icon:'💳',kw:['mora','deuda','incobrabilidad','anticuacion','castigo','cobranza','recupero']},
@@ -380,29 +343,22 @@ function est(d){
 }
 function setProg(p,t){document.getElementById('prog').style.width=p+'%';document.getElementById('ltxt').textContent=t;}
 
-async function downloadOwnerExcel(ownerName, data){
-  if(!window.XLSX){
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-      s.onload=res;s.onerror=rej;document.head.appendChild(s);
-    });
-  }
+async function downloadOwnerExcel(ownerName,data){
+  if(!window.XLSX){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
   const rows=[['Nombre','Tipo','Área','Responsable','Login','Sesiones 3m','Sesiones 6m','Sesiones 12m','Usuarios únicos','Score','Estado','Días sin acceso','Modificado','URL']];
   data.forEach(x=>rows.push([x.nm,x.tp,x.ar,x.ow,x.lg,x.s3,x.s6||0,x.s12||0,x.u3,x.sc,est(x.di).l,x.di,x.md,x.ur]));
   const ws=XLSX.utils.aoa_to_sheet(rows);
   const maxW=rows[0].map((_,i)=>Math.min(40,Math.max(...rows.map(r=>String(r[i]||'').length))));
   ws['!cols']=maxW.map(w=>({wch:w}));
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Objetos');
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Objetos');
   XLSX.writeFile(wb,`Sensei_${ownerName.replace(/[^\w]/g,'_')}.xlsx`);
 }
 
 async function loadAll(){
   try{
     setProg(10,'Cargando resumen...');
-    const r=await fetch(SUM_URL);
-    if(!r.ok)throw new Error('HTTP '+r.status);
+    const r=await fetch(SUM_URL,{credentials:'include'});
+    if(!r.ok)throw new Error('HTTP '+r.status+' — puede que necesites estar logueado en SharePoint');
     setProg(60,'Procesando...');
     SUM=await r.json();
     setProg(100,'Listo');
@@ -411,21 +367,20 @@ async function loadAll(){
     document.getElementById('rv').classList.add('active');
     loadDetail();
   }catch(e){
-    document.getElementById('load').innerHTML=`<div style="text-align:center;color:var(--er);padding:2rem"><p style="font-size:13px">${e.message}</p></div>`;
+    document.getElementById('load').innerHTML=`<div style="text-align:center;color:var(--er);padding:2rem"><p style="font-size:14px;font-weight:700">Error al cargar los datos</p><p style="font-size:12px;color:var(--t2);margin-top:8px">${e.message}</p><p style="font-size:11px;color:var(--t3);margin-top:8px">Asegurate de estar logueado en Microsoft 365</p></div>`;
   }
 }
 
 async function loadDetail(){
   document.getElementById('detbadge').style.display='flex';
   try{
-    const responses=await Promise.all(DET_URLS.map(u=>fetch(u)));
+    const responses=await Promise.all(DET_URLS.map(u=>fetch(u,{credentials:'include'})));
     if(responses.some(r=>!r.ok))throw new Error('Error cargando detalle');
     const parts=await Promise.all(responses.map(r=>r.json()));
-    DET=parts.flat().filter(r=>r.s6>0);
+    DET=parts.flat().filter(r=>r['Usabilidad 6m']>0||r.s6>0);
     detReady=true;
     document.getElementById('detbadge').style.display='none';
     initAreas(DET);
-    // Update explorar status
     const expSt=document.getElementById('exp-status');
     if(expSt){expSt.style.cssText='font-size:10px;padding:4px 10px;border-radius:20px;margin-bottom:8px;display:inline-flex;align-items:center;gap:5px;background:var(--okp);color:var(--ok)';expSt.innerHTML='✓ Catálogo completo cargado — '+DET.length.toLocaleString()+' objetos disponibles';}
     if(document.getElementById('bv').classList.contains('active')){filt=[...DET];showSearchReady();}
@@ -435,111 +390,78 @@ async function loadDetail(){
 }
 
 function initResumen(){
-  const m=SUM.meta;
-  // header KPIs removed — only resumen KPIs
-  animCount('sd',m.dash);animCount('si2',m.inf);animCount('sac',m.act);animCount('sab',m.abd);animCount('ssd',m.sdc);animCount('sar',m.areas);
-  renderTreemap(SUM.areas);renderTopUsed(SUM.top_used);renderTopRel(SUM.top_rel);
-  renderWordCloud();renderHealth(m);renderAbd(SUM.top_abd);initTopics();
+  const k=SUM.kpis;
+  animCount('sd',k.total_dashboards);animCount('si2',k.total_reportes);
+  animCount('sac',k.activos_hoy);animCount('sab',k.abandonados);
+  animCount('ssd',k.sin_descripcion);animCount('sar',k.total_areas);
+  renderTreemap(SUM.treemap);
+  renderHealth(k);
+  renderWordCloud();
 }
 
 function animCount(id,target){
-  const el=document.getElementById(id);if(!el)return;
+  const el=document.getElementById(id);if(!el||!target)return;
   let cur=0,step=Math.ceil(target/40);
   const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur.toLocaleString();if(cur>=target)clearInterval(t);},30);
 }
 
 function renderTreemap(areas){
-  const top=areas.slice(0,15),maxT=Math.max(...top.map(a=>a.d+a.i));
+  if(!areas||!areas.length)return;
+  const top=areas.slice(0,15),maxT=Math.max(...top.map(a=>a.cantidad));
   const c=document.getElementById('treemap');c.innerHTML='';
   top.forEach((a,i)=>{
-    const t=a.d+a.i,pct=t/maxT;
+    const pct=a.cantidad/maxT;
     const div=document.createElement('div');div.className='tblock';
     div.style.cssText=`background:${COLORS[i%COLORS.length]};width:${Math.max(Math.round(pct*100),8)}%;flex-grow:${pct};`;
-    div.title=`${a.ar}: ${t} objetos (${a.d} dash + ${a.i} rep)`;
-    div.innerHTML=`<div><div class="tblock-lbl">${a.ar.length>15?a.ar.substring(0,13)+'…':a.ar}</div><div class="tblock-val">${t}</div></div>`;
+    div.title=`${a.area}: ${a.cantidad} objetos`;
+    div.innerHTML=`<div><div class="tblock-lbl">${a.area.length>15?a.area.substring(0,13)+'…':a.area}</div><div class="tblock-val">${a.cantidad}</div></div>`;
     c.appendChild(div);
   });
 }
 
-function renderTopUsed(a){
-  document.getElementById('tused').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval">${x.s3}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
-}
-
-function renderTopRel(a){
-  document.getElementById('trel').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval ${rc(x.sc)}">${x.sc}</span>${x.ur?`<a href="${x.ur}" target="_blank" class="tlnk">↗</a>`:''}</div>`).join('');
-}
-
-const WORD_DATA = [{"w": "tablero", "f": 38}, {"w": "parque", "f": 38}, {"w": "dossier", "f": 18}, {"w": "altas", "f": 17}, {"w": "ftth", "f": 16}, {"w": "demanda", "f": 16}, {"w": "prepago", "f": 15}, {"w": "porta", "f": 14}, {"w": "dashboard", "f": 14}, {"w": "movil", "f": 14}, {"w": "abm", "f": 14}, {"w": "funnel", "f": 13}, {"w": "indicadores", "f": 13}, {"w": "calidad", "f": 11}, {"w": "campaña", "f": 11}, {"w": "bot", "f": 10}, {"w": "hogar", "f": 10}, {"w": "kpis", "f": 10}, {"w": "churn", "f": 10}, {"w": "ventas", "f": 10}, {"w": "móvil", "f": 10}, {"w": "alta", "f": 9}, {"w": "oferta", "f": 9}, {"w": "pospago", "f": 9}, {"w": "wapp", "f": 9}, {"w": "recargas", "f": 8}, {"w": "fija", "f": 8}, {"w": "arpu", "f": 8}, {"w": "movistar", "f": 8}, {"w": "prueba", "f": 8}, {"w": "onboarding", "f": 7}, {"w": "cumplidas", "f": 7}, {"w": "mensual", "f": 7}, {"w": "digital", "f": 7}, {"w": "seguimiento", "f": 7}, {"w": "bonos", "f": 7}, {"w": "dosier", "f": 7}, {"w": "bonificaciones", "f": 7}, {"w": "contencion", "f": 7}, {"w": "rssi", "f": 7}, {"w": "campañas", "f": 6}, {"w": "catálogo", "f": 6}, {"w": "pagos", "f": 6}, {"w": "nps", "f": 6}, {"w": "diario", "f": 6}, {"w": "reporte", "f": 6}, {"w": "delta", "f": 6}, {"w": "despliegue", "f": 6}, {"w": "portas", "f": 6}, {"w": "migras", "f": 6}, {"w": "red", "f": 6}, {"w": "clientes", "f": 5}, {"w": "metadatos", "f": 5}, {"w": "mtv", "f": 5}, {"w": "packs", "f": 5}, {"w": "equipos", "f": 5}, {"w": "valor", "f": 5}, {"w": "cosecha", "f": 5}, {"w": "venta", "f": 5}, {"w": "bajas", "f": 5}];
+const WORD_DATA=[{"w":"tablero","f":38},{"w":"parque","f":38},{"w":"dossier","f":18},{"w":"altas","f":17},{"w":"ftth","f":16},{"w":"demanda","f":16},{"w":"prepago","f":15},{"w":"porta","f":14},{"w":"dashboard","f":14},{"w":"movil","f":14},{"w":"abm","f":14},{"w":"funnel","f":13},{"w":"indicadores","f":13},{"w":"calidad","f":11},{"w":"campaña","f":11},{"w":"bot","f":10},{"w":"hogar","f":10},{"w":"kpis","f":10},{"w":"churn","f":10},{"w":"ventas","f":10},{"w":"móvil","f":10},{"w":"alta","f":9},{"w":"oferta","f":9},{"w":"pospago","f":9},{"w":"wapp","f":9},{"w":"recargas","f":8},{"w":"fija","f":8},{"w":"arpu","f":8},{"w":"movistar","f":8},{"w":"prueba","f":8},{"w":"onboarding","f":7},{"w":"cumplidas","f":7},{"w":"mensual","f":7},{"w":"digital","f":7},{"w":"seguimiento","f":7},{"w":"bonos","f":7},{"w":"dosier","f":7},{"w":"bonificaciones","f":7},{"w":"contencion","f":7},{"w":"rssi","f":7},{"w":"campañas","f":6},{"w":"catálogo","f":6},{"w":"pagos","f":6},{"w":"nps","f":6},{"w":"diario","f":6},{"w":"reporte","f":6},{"w":"delta","f":6},{"w":"despliegue","f":6},{"w":"portas","f":6},{"w":"migras","f":6},{"w":"red","f":6},{"w":"clientes","f":5},{"w":"metadatos","f":5},{"w":"mtv","f":5},{"w":"packs","f":5},{"w":"equipos","f":5},{"w":"valor","f":5},{"w":"cosecha","f":5},{"w":"venta","f":5},{"w":"bajas","f":5}];
 
 function renderWordCloud(){
-  const c=document.getElementById('wordcloud');
-  if(!c)return;
-  const maxF=Math.max(...WORD_DATA.map(w=>w.f));
-  const minF=Math.min(...WORD_DATA.map(w=>w.f));
+  const c=document.getElementById('wordcloud');if(!c)return;
+  const maxF=Math.max(...WORD_DATA.map(w=>w.f)),minF=Math.min(...WORD_DATA.map(w=>w.f));
   const colors=['#1A56C4','#06B6D4','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#14B8A6','#F97316','#6366F1'];
-  const capitalize=s=>s.charAt(0).toUpperCase()+s.slice(1);
+  const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
   WORD_DATA.forEach((wd,i)=>{
-    const pct=(wd.f-minF)/(maxF-minF||1);
-    const size=Math.round(10+pct*22);
-    const opacity=0.5+pct*0.5;
-    const color=colors[i%colors.length];
+    const pct=(wd.f-minF)/(maxF-minF||1),size=Math.round(10+pct*22),opacity=0.5+pct*0.5;
     const span=document.createElement('span');
-    span.textContent=capitalize(wd.w);
-    span.style.cssText=`font-size:${size}px;color:${color};opacity:${opacity};font-weight:${pct>0.6?700:500};cursor:default;transition:opacity .15s;`;
-    span.title=`"${wd.w}" aparece en ${wd.f} títulos de dashboards`;
+    span.textContent=cap(wd.w);
+    span.style.cssText=`font-size:${size}px;color:${colors[i%colors.length]};opacity:${opacity};font-weight:${pct>0.6?700:500};cursor:pointer;transition:opacity .15s;`;
+    span.title=`"${wd.w}" aparece en ${wd.f} títulos`;
     span.onmouseenter=()=>span.style.opacity='1';
     span.onmouseleave=()=>span.style.opacity=opacity;
     span.onclick=()=>{swt('b');setTimeout(()=>{document.getElementById('sinp').value=wd.w;fc();},100);};
-    span.style.cursor='pointer';
     c.appendChild(span);
   });
 }
 
-function renderGauge(m){
-  const t=m.total,cd=t-m.sdc,co=t-m.sow;
-  const health=Math.round((m.act/t*30)+(cd/t*30)+(co/t*20)+((t-m.abd)/t*20));
-  const color=health>=70?'var(--ok)':health>=40?'var(--wn)':'var(--er)';
-  const label=health>=70?'Buena':health>=40?'Regular':'Crítica';
-  const rad=((health/100*180)-90)*Math.PI/180;
-  const nx=80+60*Math.cos(rad),ny=80+60*Math.sin(rad);
-  document.getElementById('gauge-wrap').innerHTML=`
-    <svg viewBox="0 0 160 100" width="200" height="130">
-      <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="#E2EAF4" stroke-width="14" stroke-linecap="round"/>
-      <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="${color}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${health/180*188.5} 188.5"/>
-      <line x1="80" y1="80" x2="${nx}" y2="${ny}" stroke="${color}" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="80" cy="80" r="5" fill="${color}"/>
-      <text x="80" y="72" text-anchor="middle" font-family="Verdana" font-size="24" font-weight="700" fill="${color}">${health}</text>
-      <text x="80" y="86" text-anchor="middle" font-family="Verdana" font-size="10" fill="#94A3B8">${label}</text>
-    </svg>
-    <div style="font-size:10px;color:var(--t3);text-align:center;margin-top:-8px">Índice de salud del catálogo</div>`;
-}
-
-function renderHealth(m){
-  const t=m.total,cd=t-m.sdc,co=t-m.sow;
-  const items=[{l:'Con descripción',v:cd.toLocaleString(),p:Math.round(cd/t*100),c:'#1A56C4'},{l:'Con owner',v:co.toLocaleString(),p:Math.round(co/t*100),c:'#06B6D4'},{l:'Activos hoy',v:m.act.toLocaleString(),p:Math.round(m.act/t*100),c:'#10B981'},{l:'Abandonados',v:m.abd.toLocaleString(),p:Math.round(m.abd/t*100),c:'#EF4444'}];
+function renderHealth(k){
+  const t=k.total_objetos,cd=t-k.sin_descripcion;
+  const items=[
+    {l:'Con descripción',v:cd.toLocaleString(),p:Math.round(cd/t*100),c:'#1A56C4'},
+    {l:'Activos hoy',v:k.activos_hoy.toLocaleString(),p:Math.round(k.activos_hoy/t*100),c:'#10B981'},
+    {l:'Abandonados',v:k.abandonados.toLocaleString(),p:Math.round(k.abandonados/t*100),c:'#EF4444'},
+    {l:'Sin descripción',v:k.sin_descripcion.toLocaleString(),p:Math.round(k.sin_descripcion/t*100),c:'#F59E0B'}
+  ];
   document.getElementById('hg').innerHTML=items.map(x=>`<div class="hi"><div class="hit"><span class="hil">${x.l}</span><span class="hiv" style="color:${x.c}">${x.v}</span></div><div class="hib"><div class="hibf" style="width:${x.p}%;background:${x.c}"></div></div><div style="font-size:10px;color:var(--t3);margin-top:3px">${x.p}% del total</div></div>`).join('');
 }
 
-function renderAbd(a){
-  document.getElementById('abd').innerHTML=a.map((x,i)=>`<div class="tr"><span class="tnum">${i+1}</span><span class="tname" title="${x.nm}">${x.nm}</span><span class="tbg ${x.tp==='Dashboard'?'tbd':'tbi'}">${x.tp==='Dashboard'?'📊':'📋'}</span><span class="tval" style="color:var(--er)">${x.di}d</span><span style="font-size:10px;color:var(--t3);flex-shrink:0">${(x.ow||'').split(',')[0]}</span></div>`).join('');
-}
-
-// KPI MODAL
 function openKpi(type){
-  if(!detReady&&type!=='areas'){
-    alert('El catálogo completo aún se está cargando. Intentá en unos segundos.');return;
-  }
-  const m=SUM.meta;
-  let data=[],title='';
-  if(type==='dash'){title='📊 Dashboards';data=DET.filter(r=>r.tp==='Dashboard').sort((a,b)=>b.sc-a.sc);}
-  else if(type==='inf'){title='📋 Reportes';data=DET.filter(r=>r.tp==='Informe').sort((a,b)=>b.sc-a.sc);}
-  else if(type==='act'){title='✓ Activos hoy';data=DET.filter(r=>r.di===0).sort((a,b)=>b.s3-a.s3);}
-  else if(type==='abd'){title='⚠ Abandonados (+90 días)';data=DET.filter(r=>r.di>90).sort((a,b)=>b.di-a.di);}
-  else if(type==='sdc'){title='✗ Sin descripción';data=DET.filter(r=>!r.dc||r.dc.trim()==='').sort((a,b)=>b.sc-a.sc);}
+  if(!detReady&&type!=='areas'){alert('El catálogo completo aún se está cargando.');return;}
+  const k=SUM.kpis;let data=[],title='';
+  if(type==='dash'){title='📊 Dashboards';data=DET.filter(r=>r['Object Type Desc']==='Dashboard').sort((a,b)=>b['Score Relevancia']-a['Score Relevancia']);}
+  else if(type==='inf'){title='📋 Reportes';data=DET.filter(r=>r['Object Type Desc']!=='Dashboard').sort((a,b)=>b['Score Relevancia']-a['Score Relevancia']);}
+  else if(type==='act'){title='✓ Activos hoy';data=DET.filter(r=>r['Dias Ultimo Acceso']===0).sort((a,b)=>b['Usabilidad 3m']-a['Usabilidad 3m']);}
+  else if(type==='abd'){title='⚠ Abandonados (+90 días)';data=DET.filter(r=>(r['Dias Ultimo Acceso']||0)>90).sort((a,b)=>b['Dias Ultimo Acceso']-a['Dias Ultimo Acceso']);}
+  else if(type==='sdc'){title='✗ Sin descripción';data=DET.filter(r=>!r['Object Desc']||r['Object Desc'].trim()===''||r['Object Desc'].trim()==='<Empty>').sort((a,b)=>b['Score Relevancia']-a['Score Relevancia']);}
   else if(type==='areas'){
     title='◎ Áreas de negocio';
     const amap={};
-    DET.forEach(r=>{if(!amap[r.ar])amap[r.ar]={ar:r.ar,d:0,i:0,s3:0};amap[r.ar][r.tp==='Dashboard'?'d':'i']++;amap[r.ar].s3+=r.s3;});
+    DET.forEach(r=>{const ar=r['Object Area']||'Sin área';if(!amap[ar])amap[ar]={ar,d:0,i:0,s3:0};amap[ar][r['Object Type Desc']==='Dashboard'?'d':'i']++;amap[ar].s3+=(r['Usabilidad 3m']||0);});
     const areas=Object.values(amap).sort((a,b)=>b.d+b.i-(a.d+a.i));
     kpiData=areas;kpiTitle=title;
     document.getElementById('modal-title').textContent=title+' ('+areas.length+')';
@@ -548,7 +470,8 @@ function openKpi(type){
   }
   kpiData=data;kpiTitle=title;
   document.getElementById('modal-title').textContent=title+' ('+data.length.toLocaleString()+')';
-  document.getElementById('modal-body').innerHTML=`<table class="modal-table"><thead><tr><th>Nombre</th><th>Tipo</th><th>Área</th><th>Responsable</th><th style="text-align:right">Ses 3m</th><th style="text-align:right">Score</th><th style="text-align:center">Estado</th><th>Link</th></tr></thead><tbody>${data.map(x=>{const e=est(x.di);return`<tr><td title="${x.nm}">${x.nm}</td><td>${x.tp==='Dashboard'?'📊':'📋'} ${x.tp}</td><td>${x.ar}</td><td>${x.ow}</td><td style="text-align:right;font-weight:700">${x.s3}</td><td style="text-align:right" class="${rc(x.sc)}">${x.sc}</td><td style="text-align:center"><span class="est ${e.c}">${e.l}</span></td><td>${x.ur?`<a href="${x.ur}" target="_blank">↗</a>`:''}</td></tr>`}).join('')}</tbody></table>`;
+  const nm=r=>r['Object Name']||'',tp=r=>r['Object Type Desc']||'',ar=r=>r['Object Area']||'',ow=r=>r['Object Owner Name']||'',sc=r=>r['Score Relevancia']||0,s3=r=>r['Usabilidad 3m']||0,di=r=>r['Dias Ultimo Acceso'],ur=r=>r['Dossier Url']||'';
+  document.getElementById('modal-body').innerHTML=`<table class="modal-table"><thead><tr><th>Nombre</th><th>Tipo</th><th>Área</th><th>Responsable</th><th style="text-align:right">Ses 3m</th><th style="text-align:right">Score</th><th style="text-align:center">Estado</th><th>Link</th></tr></thead><tbody>${data.map(x=>{const e=est(di(x));return`<tr><td title="${nm(x)}">${nm(x)}</td><td>${tp(x)==='Dashboard'?'📊':'📋'} ${tp(x)}</td><td>${ar(x)}</td><td>${ow(x)}</td><td style="text-align:right;font-weight:700">${s3(x)}</td><td style="text-align:right" class="${rc(sc(x))}">${sc(x)}</td><td style="text-align:center"><span class="est ${e.c}">${e.l}</span></td><td>${ur(x)?`<a href="${ur(x)}" target="_blank">↗</a>`:''}</td></tr>`}).join('')}</tbody></table>`;
   document.getElementById('kpi-modal').classList.add('active');
 }
 
@@ -556,41 +479,32 @@ function closeKpi(){document.getElementById('kpi-modal').classList.remove('activ
 
 async function downloadKpiExcel(){
   if(!kpiData.length)return;
-  // Load SheetJS dynamically
-  if(!window.XLSX){
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-      s.onload=res;s.onerror=rej;document.head.appendChild(s);
-    });
-  }
+  if(!window.XLSX){await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
   let rows=[];
-  if(kpiData[0].ar&&!kpiData[0].nm){
+  if(kpiData[0].ar&&!kpiData[0]['Object Name']){
     rows=[['Área','Dashboards','Reportes','Total','Sesiones 3m']];
     kpiData.forEach(a=>rows.push([a.ar,a.d,a.i,a.d+a.i,a.s3]));
   }else{
-    rows=[['Nombre','Tipo','Área','Responsable','Login','Sesiones 3m','Sesiones 6m','Sesiones 12m','Usuarios únicos 3m','Score','Estado','Días sin acceso','Modificado','URL']];
-    kpiData.forEach(x=>rows.push([x.nm,x.tp,x.ar,x.ow,x.lg,x.s3,x.s6||0,x.s12||0,x.u3,x.sc,est(x.di).l,x.di,x.md,x.ur]));
+    rows=[['Nombre','Tipo','Área','Responsable','Sesiones 3m','Score','Estado','Días sin acceso','Modificado','URL']];
+    kpiData.forEach(x=>rows.push([x['Object Name'],x['Object Type Desc'],x['Object Area'],x['Object Owner Name'],x['Usabilidad 3m'],x['Score Relevancia'],est(x['Dias Ultimo Acceso']).l,x['Dias Ultimo Acceso'],x['Modification Date'],x['Dossier Url']]));
   }
   const ws=XLSX.utils.aoa_to_sheet(rows);
-  // Auto column width
   const maxW=rows[0].map((_,i)=>Math.min(40,Math.max(...rows.map(r=>String(r[i]||'').length))));
   ws['!cols']=maxW.map(w=>({wch:w}));
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Sensei');
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Sensei');
   XLSX.writeFile(wb,`Sensei_${kpiTitle.replace(/[^\w]/g,'_')}.xlsx`);
 }
 
-// BUSCAR
 function initTopics(){
   const c=document.getElementById('tps');if(!c||c.children.length>0)return;
   TOPICS.forEach(t=>{const b=document.createElement('button');b.className='tp';b.dataset.key=t.key;b.innerHTML=`<span>${t.icon}</span>${t.label}`;b.onclick=()=>{const ia=b.classList.contains('active');document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));atp=ia?null:t.key;if(!ia)b.classList.add('active');fc();};c.appendChild(b);});
 }
 
 function initAreas(r){
-  const a=[...new Set(r.map(x=>x.ar))].sort();
+  const a=[...new Set(r.map(x=>x['Object Area']||'').filter(Boolean))].sort();
   const s=document.getElementById('far');s.innerHTML='<option value="">Todas las áreas</option>';
   a.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;s.appendChild(o);});
+  initTopics();
 }
 
 function setType(type,btn){
@@ -603,10 +517,6 @@ function setType(type,btn){
 
 function sortBy(col){
   if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=-1;}
-  document.querySelectorAll('.rth span').forEach(s=>s.classList.remove('sort-asc','sort-desc'));
-  const cols=['nm','tp','ar','ow','s3','u3','sc','md','di',''];
-  const idx=cols.indexOf(col);
-  if(idx>=0){const headers=document.querySelectorAll('.rth span');if(headers[idx])headers[idx].classList.add(sortDir===1?'sort-asc':'sort-desc');}
   filt.sort((a,b)=>{
     const av=a[col]||0,bv=b[col]||0;
     if(typeof av==='string')return sortDir*av.localeCompare(bv);
@@ -615,17 +525,19 @@ function sortBy(col){
   cp=1;renderRes();
 }
 
+const COL_MAP={nm:'Object Name',tp:'Object Type Desc',ar:'Object Area',ow:'Object Owner Name',s3:'Usabilidad 3m',u3:'Usuarios Unicos 3m',sc:'Score Relevancia',md:'Modification Date',di:'Dias Ultimo Acceso'};
+
 function fc(){
   if(!detReady)return;
   const q=document.getElementById('sinp').value.toLowerCase();
   const ar=document.getElementById('far').value,rl=document.getElementById('frl').value;
   filt=DET.filter(x=>{
     let mt=true;
-    if(atp){const t=TOPICS.find(x=>x.key===atp);if(t)mt=t.kw.some(k=>(x.nm||'').toLowerCase().includes(k)||(x.dc||'').toLowerCase().includes(k)||(x.ar||'').toLowerCase().includes(k));}
-    const matchType=activeType==='all'||x.tp===activeType;
-    return mt&&matchType&&(!q||[x.nm,x.dc,x.ow,x.ar,x.lg].some(f=>(f||'').toLowerCase().includes(q)))&&(!ar||x.ar===ar)&&(!rl||rel(x.sc)===rl);
+    if(atp){const t=TOPICS.find(x=>x.key===atp);if(t)mt=t.kw.some(k=>(x['Object Name']||'').toLowerCase().includes(k)||(x['Object Desc']||'').toLowerCase().includes(k)||(x['Object Area']||'').toLowerCase().includes(k));}
+    const matchType=activeType==='all'||(activeType==='Dashboard'?x['Object Type Desc']==='Dashboard':x['Object Type Desc']!=='Dashboard');
+    return mt&&matchType&&(!q||[x['Object Name'],x['Object Desc'],x['Object Owner Name'],x['Object Area'],x['Object Owner Login']].some(f=>(f||'').toLowerCase().includes(q)))&&(!ar||x['Object Area']===ar)&&(!rl||rel(x['Score Relevancia']||0)===rl);
   });
-  filt.sort((a,b)=>sortDir*(typeof a[sortCol]==='string'?a[sortCol].localeCompare(b[sortCol]):(a[sortCol]||0)-(b[sortCol]||0)));
+  filt.sort((a,b)=>sortDir*((b['Score Relevancia']||0)-(a['Score Relevancia']||0)));
   cp=1;renderRes();
 }
 
@@ -641,7 +553,8 @@ function clr(){
 function showSearchReady(){
   document.getElementById('detloading').style.display='none';
   document.getElementById('rtbl').style.display='block';
-  filt=[...DET].sort((a,b)=>b.sc-a.sc);renderRes();
+  filt=[...DET].sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0));
+  renderRes();
 }
 
 function renderRes(){
@@ -649,18 +562,19 @@ function renderRes(){
   document.getElementById('ri').textContent=filt.length.toLocaleString()+' resultado'+(filt.length!==1?'s':'');
   let h='';
   pg.forEach(x=>{
-    const e=est(x.di),tc=x.tp==='Dashboard'?'tbd':'tbi',nm=(x.nm||'').replace(/'/g,"\\'");
+    const di=x['Dias Ultimo Acceso'],e=est(di),tc=x['Object Type Desc']==='Dashboard'?'tbd':'tbi';
+    const nm=(x['Object Name']||'').replace(/'/g,"\\'");
     h+=`<div class="rr">
-      <div class="rcn"><div>${x.nm||''}</div><div class="rcd">${x.dc||'Sin descripción'}</div></div>
-      <div><span style="font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600" class="${tc}">${x.tp==='Dashboard'?'📊':'📋'} ${x.tp}</span></div>
-      <div class="rba">${x.ar||''}</div>
-      <div class="rba" style="font-size:10px" title="${x.ow||''}">${(x.ow||'Sin owner').substring(0,18)}</div>
-      <div class="rbn" style="text-align:right">${x.s3}</div>
-      <div class="rbn" style="text-align:right">${x.u3}</div>
-      <div class="rbs ${rc(x.sc)}">${x.sc}</div>
+      <div class="rcn"><div>${x['Object Name']||''}</div><div class="rcd">${x['Object Desc']||'Sin descripción'}</div></div>
+      <div><span style="font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600" class="${tc}">${x['Object Type Desc']==='Dashboard'?'📊':'📋'} ${x['Object Type Desc']}</span></div>
+      <div class="rba">${x['Object Area']||''}</div>
+      <div class="rba" style="font-size:10px" title="${x['Object Owner Name']||''}">${(x['Object Owner Name']||'Sin owner').substring(0,18)}</div>
+      <div class="rbn">${x['Usabilidad 3m']||0}</div>
+      <div class="rbn">${x['Usuarios Unicos 3m']||0}</div>
+      <div class="rbs ${rc(x['Score Relevancia']||0)}">${x['Score Relevancia']||0}</div>
       <div class="rbst"><span class="est ${e.c}">${e.l}</span></div>
       <div class="ract">
-        ${x.ur?`<a href="${x.ur}" target="_blank" class="abt abtp">Abrir</a>`:''}
+        ${x['Dossier Url']?`<a href="${x['Dossier Url']}" target="_blank" class="abt abtp">Abrir</a>`:''}
         <button class="abt abts" onclick="showObjDetail('${nm}')">📈</button>
       </div>
     </div>`;
@@ -682,20 +596,17 @@ function rpag(){
 }
 function gp(n){cp=n;renderRes();document.getElementById('bv').scrollIntoView();}
 
-// TABS
 function swt(t){
   document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',(['r','b','e'][i])===t));
   ['rv','bv','ev'].forEach((id,i)=>document.getElementById(id).classList.toggle('active',(['r','b','e'][i])===t));
-  if(t==='b'){if(detReady){if(filt.length===0){filt=[...DET].sort((a,b)=>b.sc-a.sc);}showSearchReady();}else{document.getElementById('detloading').style.display='block';document.getElementById('rtbl').style.display='none';}}
+  if(t==='b'){if(detReady){if(filt.length===0){filt=[...DET].sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0));}showSearchReady();}else{document.getElementById('detloading').style.display='block';document.getElementById('rtbl').style.display='none';}}
 }
 
-// EXPLORAR
 function searchOwnerSuggest(){
   const q=document.getElementById('owner-input').value.toLowerCase();
   if(q.length<2){document.getElementById('owner-suggest').innerHTML='';return;}
-  const src=DET.length>0?DET:SUM.chat;
   const owners={};
-  src.forEach(r=>{const k=r.lg.toLowerCase();if(k.includes(q)||(r.ow||'').toLowerCase().includes(q)){if(!owners[k])owners[k]={ow:r.ow,lg:r.lg,cnt:0};owners[k].cnt++;}});
+  DET.forEach(r=>{const k=(r['Object Owner Login']||'').toLowerCase();const ow=r['Object Owner Name']||'';if(k.includes(q)||ow.toLowerCase().includes(q)){if(!owners[k])owners[k]={ow,lg:k,cnt:0};owners[k].cnt++;}});
   const top=Object.values(owners).sort((a,b)=>b.cnt-a.cnt).slice(0,5);
   if(!top.length){document.getElementById('owner-suggest').innerHTML='';return;}
   document.getElementById('owner-suggest').innerHTML=top.map(o=>`<div onclick="selectOwner('${o.ow.replace(/'/g,"\\'")}','${o.lg}')" style="padding:6px 10px;cursor:pointer;border-radius:6px;font-size:11px;color:var(--tx);background:var(--s2);border:1px solid var(--bd);margin-bottom:3px;display:flex;justify-content:space-between"><span><strong>${o.ow}</strong> <span style="color:var(--t3)">(${o.lg})</span></span><span style="font-size:10px;color:var(--t3)">${o.cnt} objetos</span></div>`).join('');
@@ -706,92 +617,56 @@ function selectOwner(ow,lg){document.getElementById('owner-input').value=ow;docu
 function searchOwner(owOverride){
   const q=(owOverride||document.getElementById('owner-input').value).toLowerCase();
   document.getElementById('owner-suggest').innerHTML='';
-  const src=DET.length>0?DET:SUM.chat;
-  const results=src.filter(r=>(r.ow||'').toLowerCase().includes(q)||(r.lg||'').toLowerCase().includes(q));
-  const dash=results.filter(r=>r.tp==='Dashboard').sort((a,b)=>b.sc-a.sc);
-  const inf=results.filter(r=>r.tp==='Informe').sort((a,b)=>b.sc-a.sc);
+  const results=DET.filter(r=>(r['Object Owner Name']||'').toLowerCase().includes(q)||(r['Object Owner Login']||'').toLowerCase().includes(q));
+  const dash=results.filter(r=>r['Object Type Desc']==='Dashboard').sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0));
+  const inf=results.filter(r=>r['Object Type Desc']!=='Dashboard').sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0));
   if(!results.length){document.getElementById('owner-results').innerHTML='<div class="exp-empty">No se encontró ningún responsable</div>';return;}
-  const owner=results[0];
-  const totalSes=results.reduce((s,r)=>s+r.s3,0);
-  
+  const owner=results[0];const totalSes=results.reduce((s,r)=>s+(r['Usabilidad 3m']||0),0);
   const renderListTable=(items)=>{
     if(!items.length)return'';
-    const rows=items.map(x=>`<tr>
-      <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${x.nm}">${x.nm}</td>
-      <td style="text-align:right;font-weight:600">${x.s3}</td>
-      <td style="text-align:right">${x.u3}</td>
-      <td style="text-align:right" class="${rc(x.sc)}">${x.sc}</td>
-      <td style="text-align:center"><span class="est ${est(x.di).c}" style="font-size:10px;padding:2px 5px;border-radius:8px">${est(x.di).l}</span></td>
-      <td>${x.ur?`<a href="${x.ur}" target="_blank" class="exp-item-link">↗</a>`:''}</td>
-    </tr>`).join('');
-    return`<table style="width:100%;border-collapse:collapse;font-size:11px">
-      <thead><tr style="background:var(--s2)">
-        <th style="padding:5px 8px;text-align:left;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Nombre</th>
-        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Ses 3m</th>
-        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Usuarios</th>
-        <th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Score</th>
-        <th style="padding:5px 8px;text-align:center;font-size:10px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--bd)">Estado</th>
-        <th style="padding:5px 8px;border-bottom:1px solid var(--bd)"></th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    return`<table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:5px 8px;text-align:left;font-size:10px;color:var(--t2);font-weight:700;border-bottom:1px solid var(--bd)">Nombre</th><th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;border-bottom:1px solid var(--bd)">Ses 3m</th><th style="padding:5px 8px;text-align:right;font-size:10px;color:var(--t2);font-weight:700;border-bottom:1px solid var(--bd)">Score</th><th style="padding:5px 8px;text-align:center;font-size:10px;color:var(--t2);font-weight:700;border-bottom:1px solid var(--bd)">Estado</th><th style="padding:5px 8px;border-bottom:1px solid var(--bd)"></th></tr></thead><tbody>${items.map(x=>`<tr><td style="padding:5px 8px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${x['Object Name']}">${x['Object Name']}</td><td style="padding:5px 8px;text-align:right;font-weight:600">${x['Usabilidad 3m']||0}</td><td style="padding:5px 8px;text-align:right" class="${rc(x['Score Relevancia']||0)}">${x['Score Relevancia']||0}</td><td style="padding:5px 8px;text-align:center"><span class="est ${est(x['Dias Ultimo Acceso']).c}">${est(x['Dias Ultimo Acceso']).l}</span></td><td style="padding:5px 8px">${x['Dossier Url']?`<a href="${x['Dossier Url']}" target="_blank" class="exp-item-link">↗</a>`:''}</td></tr>`).join('')}</tbody></table>`;
   };
-
-  let h=`<div class="exp-owner-badge" style="display:flex;justify-content:space-between;align-items:center">
-    <div>
-      <div class="exp-owner-name">${owner.ow}</div>
-      <div class="exp-owner-stats">${owner.lg} · ${results.length} objetos (${dash.length} dashboards + ${inf.length} reportes) · ${totalSes.toLocaleString()} sesiones 3m</div>
-    </div>
-    <button onclick="downloadOwnerExcel('${owner.ow.replace(/'/g,"\'")}',${JSON.stringify(results).replace(/\\/g,'\\\\').replace(/'/g,"\'")})" class="exp-btn" style="padding:6px 12px;font-size:11px">⬇ Excel</button>
-  </div>`;
-  if(dash.length)h+=`<div style="font-size:10px;font-weight:700;color:var(--pr);margin:8px 0 6px;text-transform:uppercase;letter-spacing:.4px">📊 Dashboards (${dash.length})</div>${renderListTable(dash)}${dash.length>20?`<div style="font-size:10px;color:var(--t3);padding:4px 0">Mostrando 20 de ${dash.length}</div>`:''}`;
-  if(inf.length)h+=`<div style="font-size:10px;font-weight:700;color:#0369A1;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.4px">📋 Reportes (${inf.length})</div>${renderListTable(inf)}${inf.length>20?`<div style="font-size:10px;color:var(--t3);padding:4px 0">Mostrando 20 de ${inf.length}</div>`:''}`;
+  let h=`<div class="exp-owner-badge" style="display:flex;justify-content:space-between;align-items:center"><div><div class="exp-owner-name">${owner['Object Owner Name']}</div><div class="exp-owner-stats">${owner['Object Owner Login']} · ${results.length} objetos · ${totalSes.toLocaleString()} sesiones 3m</div></div></div>`;
+  if(dash.length)h+=`<div style="font-size:10px;font-weight:700;color:var(--pr);margin:8px 0 6px;text-transform:uppercase;letter-spacing:.4px">📊 Dashboards (${dash.length})</div>${renderListTable(dash)}`;
+  if(inf.length)h+=`<div style="font-size:10px;font-weight:700;color:#0369A1;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.4px">📋 Reportes (${inf.length})</div>${renderListTable(inf)}`;
   document.getElementById('owner-results').innerHTML=h;
 }
 
 function searchObjSuggest(){
   const q=document.getElementById('obj-input').value.toLowerCase();
   if(q.length<3){document.getElementById('obj-suggest').innerHTML='';return;}
-  const src=DET.length>0?DET:SUM.chat;
-  const results=src.filter(r=>(r.nm||'').toLowerCase().includes(q)).sort((a,b)=>b.sc-a.sc).slice(0,5);
+  const results=DET.filter(r=>(r['Object Name']||'').toLowerCase().includes(q)).sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0)).slice(0,5);
   if(!results.length){document.getElementById('obj-suggest').innerHTML='';return;}
-  document.getElementById('obj-suggest').innerHTML=results.map(r=>`<div onclick="selectObj('${r.nm.replace(/'/g,"\\'")}','${r.tp}')" style="padding:6px 10px;cursor:pointer;border-radius:6px;font-size:11px;color:var(--tx);background:var(--s2);border:1px solid var(--bd);margin-bottom:3px;display:flex;justify-content:space-between"><span>${r.tp==='Dashboard'?'📊':'📋'} <strong>${r.nm}</strong></span><span style="font-size:10px;color:var(--t3)">${r.ar}</span></div>`).join('');
+  document.getElementById('obj-suggest').innerHTML=results.map(r=>`<div onclick="selectObj('${(r['Object Name']||'').replace(/'/g,"\\'")}','${r['Object Type Desc']}')" style="padding:6px 10px;cursor:pointer;border-radius:6px;font-size:11px;color:var(--tx);background:var(--s2);border:1px solid var(--bd);margin-bottom:3px;display:flex;justify-content:space-between"><span>${r['Object Type Desc']==='Dashboard'?'📊':'📋'} <strong>${r['Object Name']}</strong></span><span style="font-size:10px;color:var(--t3)">${r['Object Area']||''}</span></div>`).join('');
 }
 
 function selectObj(nm){document.getElementById('obj-input').value=nm;document.getElementById('obj-suggest').innerHTML='';showObjDetail(nm);}
 
-function showObjDetail(nm){
-  swt('e');document.getElementById('obj-input').value=nm;searchObj(nm);
-}
+function showObjDetail(nm){swt('e');document.getElementById('obj-input').value=nm;searchObj(nm);}
 
 function searchObj(nmOverride){
   const q=(nmOverride||document.getElementById('obj-input').value).toLowerCase();
   document.getElementById('obj-suggest').innerHTML='';
-  const src=DET.length>0?DET:SUM.chat;
-  const results=src.filter(r=>(r.nm||'').toLowerCase().includes(q)).sort((a,b)=>b.sc-a.sc);
+  const results=DET.filter(r=>(r['Object Name']||'').toLowerCase().includes(q)).sort((a,b)=>(b['Score Relevancia']||0)-(a['Score Relevancia']||0));
   if(!results.length){document.getElementById('obj-results').innerHTML='<div class="exp-empty">No se encontró ningún objeto</div>';return;}
   document.getElementById('obj-results').innerHTML=results.slice(0,5).map(x=>{
-    const e=est(x.di),freq=x.u3>0?Math.round(x.s3/x.u3*10)/10:0;
+    const e=est(x['Dias Ultimo Acceso']),freq=(x['Usuarios Unicos 3m']||0)>0?Math.round((x['Usabilidad 3m']||0)/(x['Usuarios Unicos 3m']||1)*10)/10:0;
     return`<div style="margin-bottom:12px;padding:12px;background:var(--s2);border-radius:10px;border:1px solid var(--bd)">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
-        <div>
-          <div style="font-size:12px;font-weight:700;color:var(--tx)">${x.tp==='Dashboard'?'📊':'📋'} ${x.nm}</div>
-          <div style="font-size:10px;color:var(--t3);margin-top:2px">${x.ar} · 👤 ${x.ow} (${x.lg})</div>
-          <div style="font-size:11px;color:var(--t2);margin-top:2px">${x.dc||'Sin descripción'}</div>
-        </div>
+        <div><div style="font-size:12px;font-weight:700;color:var(--tx)">${x['Object Type Desc']==='Dashboard'?'📊':'📋'} ${x['Object Name']}</div><div style="font-size:10px;color:var(--t3);margin-top:2px">${x['Object Area']||''} · 👤 ${x['Object Owner Name']||''}</div><div style="font-size:11px;color:var(--t2);margin-top:2px">${x['Object Desc']||'Sin descripción'}</div></div>
         <span class="est ${e.c}" style="flex-shrink:0;margin-left:8px">${e.l}</span>
       </div>
       <div class="exp-usage-grid">
-        <div class="exp-usage-box"><div class="exp-usage-val">${x.s3.toLocaleString()}</div><div class="exp-usage-lbl">Ses 3m</div></div>
-        <div class="exp-usage-box"><div class="exp-usage-val">${(x.s6||0).toLocaleString()}</div><div class="exp-usage-lbl">Ses 6m</div></div>
-        <div class="exp-usage-box"><div class="exp-usage-val">${(x.s12||0).toLocaleString()}</div><div class="exp-usage-lbl">Ses 12m</div></div>
-        <div class="exp-usage-box"><div class="exp-usage-val">${x.u3.toLocaleString()}</div><div class="exp-usage-lbl">Usuarios</div></div>
+        <div class="exp-usage-box"><div class="exp-usage-val">${(x['Usabilidad 3m']||0).toLocaleString()}</div><div class="exp-usage-lbl">Ses 3m</div></div>
+        <div class="exp-usage-box"><div class="exp-usage-val">${(x['Usabilidad 6m']||0).toLocaleString()}</div><div class="exp-usage-lbl">Ses 6m</div></div>
+        <div class="exp-usage-box"><div class="exp-usage-val">${(x['Usabilidad 12m']||0).toLocaleString()}</div><div class="exp-usage-lbl">Ses 12m</div></div>
+        <div class="exp-usage-box"><div class="exp-usage-val">${(x['Usuarios Unicos 3m']||0).toLocaleString()}</div><div class="exp-usage-lbl">Usuarios</div></div>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
-        <span style="font-size:10px;color:var(--t2)">📅 Modificado: ${x.md}</span>
+        <span style="font-size:10px;color:var(--t2)">📅 Modificado: ${x['Modification Date']||''}</span>
         <span style="font-size:10px;color:var(--t2)">🔄 Frec: ${freq}x por usuario</span>
-        <span style="font-size:10px;color:var(--t2)">⭐ Score: <strong class="${rc(x.sc)}">${x.sc}</strong></span>
-        ${x.ur?`<a href="${x.ur}" target="_blank" style="font-size:10px;color:var(--pr);font-weight:700">↗ Abrir</a>`:''}
+        <span style="font-size:10px;color:var(--t2)">⭐ Score: <strong class="${rc(x['Score Relevancia']||0)}">${x['Score Relevancia']||0}</strong></span>
+        ${x['Dossier Url']?`<a href="${x['Dossier Url']}" target="_blank" style="font-size:10px;color:var(--pr);font-weight:700">↗ Abrir</a>`:''}
       </div>
     </div>`;
   }).join('');
