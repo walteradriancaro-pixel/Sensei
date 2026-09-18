@@ -168,7 +168,7 @@ select:focus{border-color:var(--pr)}
 <header class="hdr">
   <div class="logo">
     <div class="lm">S</div>
-    <div><div class="ln">Sensei</div></div>
+    <div><div class="ln">Sensei</div><div class="lt">Actualizado: <span id="fecha-act">—</span></div></div>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="swt('r')">📊 Resumen</button>
@@ -400,6 +400,9 @@ function initResumen(){
   if(SUM.top_used)renderTopUsed(SUM.top_used);
   if(SUM.top_rel)renderTopRel(SUM.top_rel);
   if(SUM.top_abd)renderAbd(SUM.top_abd);
+  // Fecha de actualizacion
+  const fa=document.getElementById('fecha-act');
+  if(fa&&SUM.fecha_actualizacion)fa.textContent=SUM.fecha_actualizacion;
 }
 
 function renderTopUsed(a){
